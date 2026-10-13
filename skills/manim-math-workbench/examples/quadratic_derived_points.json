@@ -1,0 +1,289 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "Quadratic dependent points",
+  "audio_duration": 8,
+  "narration": "Synthetic capability fixture.",
+  "canvas": {
+    "width": 1280,
+    "height": 720,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "synthetic",
+      "title": "Shared parameter and projection",
+      "start": 0,
+      "end": 8,
+      "world_bounds": [
+        -3,
+        5,
+        -2,
+        6
+      ],
+      "problem": [],
+      "parameters": {
+        "t": -1
+      },
+      "objects": [
+        {
+          "id": "axes",
+          "type": "coordinate_axes",
+          "x_ticks": [
+            -2,
+            0,
+            2,
+            4
+          ],
+          "y_ticks": [
+            0,
+            2,
+            4,
+            6
+          ],
+          "label_offsets": {
+            "origin": [
+              -0.25,
+              -0.25
+            ]
+          },
+          "grid": true
+        },
+        {
+          "id": "f",
+          "type": "quadratic",
+          "a": 0.5,
+          "h": 0,
+          "k": -1,
+          "color": "#52C7EA"
+        },
+        {
+          "id": "A",
+          "type": "point",
+          "xy": [
+            -2,
+            2
+          ],
+          "label": "A",
+          "label_offset": [
+            -0.5,
+            0
+          ]
+        },
+        {
+          "id": "B",
+          "type": "point",
+          "xy": [
+            4,
+            5
+          ],
+          "label": "B"
+        },
+        {
+          "id": "Q",
+          "type": "point",
+          "derive": {
+            "type": "on_quadratic",
+            "curve": "f",
+            "x": {
+              "parameter": "t",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "Q",
+          "color": "#FFD166",
+          "label_offset": [
+            0,
+            -0.65
+          ]
+        },
+        {
+          "id": "Q1",
+          "type": "point",
+          "derive": {
+            "type": "on_quadratic",
+            "curve": "f",
+            "x": {
+              "parameter": "t",
+              "scale": 1,
+              "offset": -0.35
+            }
+          },
+          "label": "Q1",
+          "color": "#A9DFBF",
+          "label_offset": [
+            -0.65,
+            -0.1
+          ]
+        },
+        {
+          "id": "Q2",
+          "type": "point",
+          "derive": {
+            "type": "on_quadratic",
+            "curve": "f",
+            "x": {
+              "parameter": "t",
+              "scale": 1,
+              "offset": 0.35
+            }
+          },
+          "label": "Q2",
+          "color": "#D7BDE2",
+          "label_offset": [
+            0.65,
+            -0.1
+          ]
+        },
+        {
+          "id": "H",
+          "type": "point",
+          "derive": {
+            "type": "project",
+            "source": "Q",
+            "line": [
+              "A",
+              "B"
+            ]
+          },
+          "label": "H",
+          "label_offset": [
+            -0.15,
+            0.5
+          ]
+        },
+        {
+          "id": "T",
+          "type": "point",
+          "derive": {
+            "type": "translate",
+            "source": "Q",
+            "vector": [
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "id": "M",
+          "type": "point",
+          "derive": {
+            "type": "intersect",
+            "lines": [
+              [
+                "Q",
+                "T"
+              ],
+              [
+                "A",
+                "B"
+              ]
+            ]
+          },
+          "label": "M",
+          "label_offset": [
+            0.2,
+            0.4
+          ]
+        },
+        {
+          "id": "R",
+          "type": "point",
+          "derive": {
+            "type": "reflect",
+            "source": "Q",
+            "axis": [
+              "A",
+              "B"
+            ]
+          }
+        },
+        {
+          "id": "AB",
+          "type": "line",
+          "a": "A",
+          "b": "B"
+        },
+        {
+          "id": "QH",
+          "type": "line",
+          "a": "Q",
+          "b": "H",
+          "color": "#FFD166"
+        },
+        {
+          "id": "QM",
+          "type": "line",
+          "a": "Q",
+          "b": "M",
+          "color": "#A9DFBF",
+          "dashed": true
+        },
+        {
+          "id": "circle",
+          "type": "circle",
+          "center": "Q",
+          "radius": 0.35,
+          "color": "#FFD166"
+        },
+        {
+          "id": "square",
+          "type": "right_angle",
+          "vertex": "H",
+          "arm1": "Q",
+          "arm2": "B",
+          "size": 0.15
+        },
+        {
+          "id": "triangle",
+          "type": "polygon",
+          "points": [
+            "Q",
+            "H",
+            "M"
+          ],
+          "color": "#A9DFBF",
+          "fill_opacity": 0.08
+        }
+      ],
+      "actions": [
+        {
+          "at": 0.5,
+          "duration": 0.5,
+          "type": "reveal",
+          "ids": [
+            "axes",
+            "f",
+            "A",
+            "B",
+            "Q",
+            "Q1",
+            "Q2",
+            "H",
+            "M",
+            "AB",
+            "QH",
+            "QM",
+            "circle",
+            "square"
+          ],
+          "style": "fade"
+        },
+        {
+          "at": 1.5,
+          "duration": 4,
+          "type": "set_parameter",
+          "parameter": "t",
+          "value": 2
+        }
+      ],
+      "checks": [],
+      "plot_rect": [
+        0,
+        -0.35,
+        12,
+        5.8
+      ]
+    }
+  ]
+}

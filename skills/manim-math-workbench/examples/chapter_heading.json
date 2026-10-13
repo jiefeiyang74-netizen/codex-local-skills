@@ -1,0 +1,233 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "线段长度",
+  "audio_duration": 12,
+  "narration": "观察线段，长度为五。",
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "c0",
+      "title": "第一模块",
+      "start": 0,
+      "end": 4,
+      "world_bounds": [
+        -1,
+        4,
+        -1,
+        5
+      ],
+      "problem": [
+        "求线段AB长度"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ],
+          "label": "A"
+        },
+        {
+          "id": "B",
+          "type": "point",
+          "xy": [
+            3,
+            4
+          ],
+          "label": "B"
+        },
+        {
+          "id": "AB",
+          "type": "line",
+          "a": "A",
+          "b": "B",
+          "kind": "segment"
+        }
+      ],
+      "actions": [
+        {
+          "at": 0.8,
+          "duration": 0.6,
+          "type": "reveal",
+          "ids": [
+            "A",
+            "B",
+            "AB"
+          ],
+          "style": "fade"
+        },
+        {
+          "at": 2,
+          "duration": 0.5,
+          "type": "formula",
+          "lines": [
+            "AB = 5"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "type": "distance",
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "c1",
+      "title": "第一模块",
+      "start": 4,
+      "end": 8,
+      "world_bounds": [
+        -1,
+        4,
+        -1,
+        5
+      ],
+      "problem": [
+        "求线段AB长度"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ],
+          "label": "A"
+        },
+        {
+          "id": "B",
+          "type": "point",
+          "xy": [
+            3,
+            4
+          ],
+          "label": "B"
+        },
+        {
+          "id": "AB",
+          "type": "line",
+          "a": "A",
+          "b": "B",
+          "kind": "segment"
+        }
+      ],
+      "actions": [
+        {
+          "at": 4.8,
+          "duration": 0.6,
+          "type": "reveal",
+          "ids": [
+            "A",
+            "B",
+            "AB"
+          ],
+          "style": "fade"
+        },
+        {
+          "at": 6,
+          "duration": 0.5,
+          "type": "formula",
+          "lines": [
+            "AB = 5"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "type": "distance",
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "title": "第二模块",
+      "start": 8,
+      "end": 12,
+      "world_bounds": [
+        -1,
+        4,
+        -1,
+        5
+      ],
+      "problem": [
+        "求线段AB长度"
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ],
+          "label": "A"
+        },
+        {
+          "id": "B",
+          "type": "point",
+          "xy": [
+            3,
+            4
+          ],
+          "label": "B"
+        },
+        {
+          "id": "AB",
+          "type": "line",
+          "a": "A",
+          "b": "B",
+          "kind": "segment"
+        }
+      ],
+      "actions": [
+        {
+          "at": 8.8,
+          "duration": 0.6,
+          "type": "reveal",
+          "ids": [
+            "A",
+            "B",
+            "AB"
+          ],
+          "style": "fade"
+        },
+        {
+          "at": 10,
+          "duration": 0.5,
+          "type": "formula",
+          "lines": [
+            "AB = 5"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "type": "distance",
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": 5
+        }
+      ]
+    }
+  ],
+  "heading_mode": "chapter"
+}

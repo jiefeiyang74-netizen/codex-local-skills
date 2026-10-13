@@ -1,0 +1,43 @@
+{
+  "schema_version": "4.3",
+  "planner_mode": "model",
+  "title": "Offline smoke test",
+  "problem": "A square has one unit.",
+  "unsupported_requirements": [],
+  "entities": [
+    {"id": "box", "kind": "square", "label": "square", "color": "#4CC9F0"}
+  ],
+  "beats": [
+    {
+      "id": "b01",
+      "layout": "equations",
+      "narration": "Given one.",
+      "rows": [{"text": "{{box}}＝1", "accent": false}],
+      "focus": [0],
+      "actions": [{"type": "show_formula", "anchor": "Given", "row": 0}]
+    },
+    {
+      "id": "b02",
+      "layout": "diagram",
+      "narration": "Show the square.",
+      "diagrams": [{"entity": "box", "parts": 1, "animation": "show_then_partition"}],
+      "actions": [{"type": "show_whole", "anchor": "square", "entity": "box"}]
+    },
+    {
+      "id": "b03",
+      "layout": "derivation",
+      "narration": "Solve it.",
+      "rows": [{"text": "{{box}}＝1", "accent": false}],
+      "focus": [0],
+      "actions": [{"type": "focus_formula", "anchor": "Solve", "row": 0}]
+    },
+    {
+      "id": "b04",
+      "layout": "summary",
+      "narration": "The answer is one.",
+      "rows": [{"text": "{{box}}＝1", "accent": true}],
+      "focus": "all",
+      "actions": [{"type": "show_answer", "anchor": "answer", "row": 0}]
+    }
+  ]
+}

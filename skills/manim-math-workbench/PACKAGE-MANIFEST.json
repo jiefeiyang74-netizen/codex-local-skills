@@ -1,0 +1,553 @@
+{
+  "package": "manim-math-workbench",
+  "manifest_revision": "20261013-public-source-mit",
+  "schema_version": "geometry-1.0",
+  "capability_version": "geometry-1.8.1",
+  "runner_version": "0.1.2",
+  "payload_count": 108,
+  "expected_archive_member_count": 109,
+  "scope": "Public source, generic examples, maintenance tests and synthetic fixture source. Excludes private inputs, runtime configuration, binaries, media, logs, caches and backups.",
+  "validation_reference": "VALIDATION.md",
+  "files": [
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "5c27bf42fd63b11db5a31d4991bb0eeacfe4a88ec9c6c0bbe97c70b3437d417c",
+      "bytes": 461
+    },
+    {
+      "path": "assets/douyin/NOTICE.md",
+      "sha256": "129ebfbf466b9ddb1e2251deb63ec199ea76de7b7d516fe2d1fab89a2556d0c7",
+      "bytes": 2366
+    },
+    {
+      "path": "assets/douyin/runtime-lock.json",
+      "sha256": "3c5807ef071001eb2aee5fa90d266d2e87b4b3ae31eb8eca17167a5f6b5ce715",
+      "bytes": 349
+    },
+    {
+      "path": "assets/douyin/source/go.mod",
+      "sha256": "2272b29be96731597940291927d8578413e31ea7db7efe128e9b99cb9a790ac2",
+      "bytes": 55
+    },
+    {
+      "path": "assets/douyin/source/internal/downloader/downloader.go",
+      "sha256": "29cadf8affebdc6d194061d83065e87b4f1bc9707e3967649dbaa99d1313fbfb",
+      "bytes": 15489
+    },
+    {
+      "path": "assets/douyin/source/internal/downloader/portable_test.go",
+      "sha256": "c60e7a5590b289da6e3a6e8f1ef0cd30361e818552339e15a4207346854dd0b1",
+      "bytes": 516
+    },
+    {
+      "path": "assets/douyin/source/internal/downloader/url_guard.go",
+      "sha256": "c277ba7569536d95c155a47b331447afc22da8372feb7386a974810f3c775ea3",
+      "bytes": 717
+    },
+    {
+      "path": "assets/douyin/source/internal/resolver/portable_test.go",
+      "sha256": "aacb475537bffba230cd10b00877fc629ade842fea8be9292546649f6448617a",
+      "bytes": 502
+    },
+    {
+      "path": "assets/douyin/source/internal/resolver/resolver.go",
+      "sha256": "4807edad5bfbfb59f4f5087a561022af50d969dafc6f7afd86511d59d2871978",
+      "bytes": 4403
+    },
+    {
+      "path": "assets/douyin/source/internal/transcriber/local.go",
+      "sha256": "b8c2ab39eed3b2d48f566d25e97cebf0166778d4ad861183b725e2ebc0b0f49f",
+      "bytes": 5974
+    },
+    {
+      "path": "assets/douyin/source/LICENSE",
+      "sha256": "f31cff7fc10e3b8ae4bbe674f0f6f53b6d2fd05a86a2f4efc556c88de982517e",
+      "bytes": 1088
+    },
+    {
+      "path": "assets/douyin/source/main.go",
+      "sha256": "bac85ffb17e6b1fa80f4e6f6abeb58b95e5335b000e19ba07c71f585a0a55ff9",
+      "bytes": 1609
+    },
+    {
+      "path": "assets/douyin/web/package-lock.json",
+      "sha256": "b71e4725963a9f3f05392ec2cb2fce05321feba1c9ae8c8f253fa68bc8f7a32e",
+      "bytes": 712
+    },
+    {
+      "path": "assets/douyin/web/package.json",
+      "sha256": "e997cda6ea2dfae88dd0714fc6a6c4d9243f9f625b1b6276b372c999144c2a56",
+      "bytes": 214
+    },
+    {
+      "path": "assets/douyin/web/scripts/fetch_douyin_media.mjs",
+      "sha256": "bc5a34fcb9f2bc54b36a3fea75ab904aa059ae29e8620a36bd2d3c98463cd10a",
+      "bytes": 4916
+    },
+    {
+      "path": "assets/douyin/web/server.mjs",
+      "sha256": "b2453eff5b42d2ae5baf4514af2b5f2919e2f1f1d888e9a4127a10d76fa01721",
+      "bytes": 7564
+    },
+    {
+      "path": "assets/engine/geometry/__init__.py",
+      "sha256": "3050813dce75798525a316a5422743bc751f9e945687f10993178deb676a069d",
+      "bytes": 353
+    },
+    {
+      "path": "assets/engine/geometry/conic.py",
+      "sha256": "f2a19bce787d2bd7c8b49cc093109c2af24e4d34bc650e542914d456896570b3",
+      "bytes": 7506
+    },
+    {
+      "path": "assets/engine/geometry/conic_runtime.py",
+      "sha256": "3290810fe335e1b9e9d4815b5bd37755322130e123997bf48c77661e854a3b1d",
+      "bytes": 1257
+    },
+    {
+      "path": "assets/engine/geometry/developable.py",
+      "sha256": "cc565376227a184564e48c703cd67d4ccb2997bc71a74425020a96bf6ad8bc92",
+      "bytes": 4814
+    },
+    {
+      "path": "assets/engine/geometry/glyph_layout.py",
+      "sha256": "8122a0ba47d6763c534313918a8d917cfa446d379023f9410292903974ec9f6c",
+      "bytes": 2866
+    },
+    {
+      "path": "assets/engine/geometry/math2d.py",
+      "sha256": "f29adfd2356f39edaca42bde38132b508413b33b84ba8ce4ac4d9d96061c2e99",
+      "bytes": 21450
+    },
+    {
+      "path": "assets/engine/geometry/native_encoder.py",
+      "sha256": "8483f02288e448e17887bdf0501182a3469a16b82dbc1170e6f6d4e4472ff134",
+      "bytes": 6222
+    },
+    {
+      "path": "assets/engine/geometry/native_encoding.md",
+      "sha256": "79ab8c0f953244affef2a3f2b134aaad6b106e01a50c900e09b567d93fd8f771",
+      "bytes": 1380
+    },
+    {
+      "path": "assets/engine/geometry/pipeline.py",
+      "sha256": "54bf03cdbafaf30cb2771e6256ba72b4d5bcb06904ebf23dd859bf3a5abcf06f",
+      "bytes": 54906
+    },
+    {
+      "path": "assets/engine/geometry/quadratic.py",
+      "sha256": "1055ca132d2b5859b2675574d37bfd43fd7b0624d43c02397b60c531700bf9a1",
+      "bytes": 7697
+    },
+    {
+      "path": "assets/engine/geometry/quadratic_runtime.py",
+      "sha256": "1e015269929d75642504aa8d0eba475e79005e91c460c3e0386398e2441a547c",
+      "bytes": 5737
+    },
+    {
+      "path": "assets/engine/geometry/qwen_alignment.md",
+      "sha256": "7228436015b9925e31a5fd220dbc644e3cc4c96caec4e8506775c02e5362effb",
+      "bytes": 2390
+    },
+    {
+      "path": "assets/engine/geometry/qwen_provenance.py",
+      "sha256": "e08e09a084d060ef1ffe47e5c3912b79c97c195dbae1cc7f0fa74cb305e18f41",
+      "bytes": 17458
+    },
+    {
+      "path": "assets/engine/geometry/reciprocal.py",
+      "sha256": "d63e335f5dcea7a8fe7ea667ef01035a1ad114b397c5b24cc68da1accaff668f",
+      "bytes": 6288
+    },
+    {
+      "path": "assets/engine/geometry/runtime.py",
+      "sha256": "ea85be076439eb45b094cb77cd6a3e74eae04eb115224a849e618df2ca790a5c",
+      "bytes": 54603
+    },
+    {
+      "path": "assets/engine/geometry/schema.py",
+      "sha256": "2e80b90fb9b39de704f6a396887fd0dfd44092a7e0cf95e95e37533facedfb73",
+      "bytes": 46718
+    },
+    {
+      "path": "assets/engine/geometry/whisper_provenance.py",
+      "sha256": "3bd6c40b5a3d6846130817b18676d09f4053e6bcef7a81b6893b53376a5438ed",
+      "bytes": 18312
+    },
+    {
+      "path": "assets/engine/prompts/animation_director.md",
+      "sha256": "a741bc1c6ac54b0e3031821ed63c94b06d66abfed7aceaa66238bfc821eef536",
+      "bytes": 30726
+    },
+    {
+      "path": "assets/engine/prompts/geometry_director.md",
+      "sha256": "06a6c4c3bfe23529ba4d2420d7eb1865739620be8e0388af381792230ecf91fb",
+      "bytes": 34184
+    },
+    {
+      "path": "assets/engine/v3/__init__.py",
+      "sha256": "29430028af5f7af586f5de7e1f8ba97378f5be5277bfad7536cbbc9a9235f823",
+      "bytes": 758
+    },
+    {
+      "path": "assets/engine/v3/audio_timing.py",
+      "sha256": "7b758ec3170310fd11da4242fe8dfd13af39faae51c1ba0ee25b3571581bb91d",
+      "bytes": 26446
+    },
+    {
+      "path": "assets/engine/v3/capabilities.py",
+      "sha256": "95bcdb0837509d891a044f0e0761d8334998f04eb6cce6b680ecd917fcd9b729",
+      "bytes": 2985
+    },
+    {
+      "path": "assets/engine/v3/cauchy_min_motion.py",
+      "sha256": "a817e7c34ef3fc57d04b5564088745b8f453945edd3584768db4b9e418d8cd53",
+      "bytes": 19212
+    },
+    {
+      "path": "assets/engine/v3/circle_max_motion.py",
+      "sha256": "c1d7d8d5d42b1b9a03662735ac32ee910ac455df3bc297ae2987e7503400864e",
+      "bytes": 14884
+    },
+    {
+      "path": "assets/engine/v3/compiler.py",
+      "sha256": "3e6a941a8232adffd707af802bc41ead035b5a2d42bf8169429d305d9c9f7789",
+      "bytes": 2534
+    },
+    {
+      "path": "assets/engine/v3/equation_motion.py",
+      "sha256": "8d0aadf04b75664642b33f936c613e000c8221c484ab8b7e64bd63c09b707f17",
+      "bytes": 2190
+    },
+    {
+      "path": "assets/engine/v3/part_motion.py",
+      "sha256": "4785618c3b5d1d19c45985fa4bb00c3eb92484a342788bef2b27db0684a083e8",
+      "bytes": 7542
+    },
+    {
+      "path": "assets/engine/v3/partial_cache.py",
+      "sha256": "0223381a67e90e176ca01677fa8f844275cb2a2cac908cb549450886b7e8938e",
+      "bytes": 2424
+    },
+    {
+      "path": "assets/engine/v3/rendering.py",
+      "sha256": "2c075c61a24920e8d0562a36a3dfbb8f2012bd58d062165571b65ae70b3b49b0",
+      "bytes": 47111
+    },
+    {
+      "path": "assets/engine/v3/runtime_template.py",
+      "sha256": "e75bc17689610ce22d9d691bcfb1866355414449280fb068b6fddde87bda8314",
+      "bytes": 104895
+    },
+    {
+      "path": "assets/engine/v3/storyboard.py",
+      "sha256": "fc45a4bd6b0f57ee6ad82c7c3cf4c1e1b5c8cd0d618d2dbdc74c39d327614cf5",
+      "bytes": 103789
+    },
+    {
+      "path": "assets/engine/v3/unit_equation.py",
+      "sha256": "a204e04bb8901a773cee775093d2e56b7e7f74e4f09e621e253d83e0d9447bf0",
+      "bytes": 9565
+    },
+    {
+      "path": "assets/examples/README.md",
+      "sha256": "4c59b245f6a44b341ad30e1d56cb5054a54e0d0c3e0bb8098158f9b4a25dd7de",
+      "bytes": 510
+    },
+    {
+      "path": "assets/examples/runtime-config.example.json",
+      "sha256": "a62fd12bcca4b17825d09296a15e6cebdd7105e6a5341080c9fd223cfbe8a33e",
+      "bytes": 180
+    },
+    {
+      "path": "assets/examples/smoke_request.json",
+      "sha256": "44f8305426c6fef5da4f7fad2895d5bc3325535a1a2b5e566bd836f5ed79dcb2",
+      "bytes": 185
+    },
+    {
+      "path": "assets/examples/smoke_storyboard.json",
+      "sha256": "aa1068b06aa070c1ee78f616bd1751b58517fac4072124373eb01d189c21affa",
+      "bytes": 1283
+    },
+    {
+      "path": "assets/runtime-lock.json",
+      "sha256": "e8ce8eacaefd7941fbd84b275fce9952eb80b74f6f8e7d7e9883b2c4d01ecb5b",
+      "bytes": 3187
+    },
+    {
+      "path": "examples/chapter_heading.json",
+      "sha256": "323de3346a5c1f8fa16884adfce26c98c14357ddc85985d5f21a563fe0d61334",
+      "bytes": 4231
+    },
+    {
+      "path": "examples/circle_projection.json",
+      "sha256": "df4465ef4150442b3516dfd6812f31f0cbed5f830dd4a96bc88c949667f3cb1c",
+      "bytes": 1830
+    },
+    {
+      "path": "examples/conic_motion.json",
+      "sha256": "62daeab7e59f19eabe3cd7a664da4a8aa22eea90fac9575ad3092d81786ff84a",
+      "bytes": 4512
+    },
+    {
+      "path": "examples/geometry_minimal.json",
+      "sha256": "868afcf779e2e1403afdf1a06c4c87be1bc047ac87b5523d318d6ca6f734f92b",
+      "bytes": 834
+    },
+    {
+      "path": "examples/long_lesson_minimal.json",
+      "sha256": "940bf5316daa3b5abfe18b4e64e1a9c72b2dea9192897a7c51f3fa799ab59337",
+      "bytes": 1614
+    },
+    {
+      "path": "examples/quadratic_derived_points.json",
+      "sha256": "278ccced722fd78ccf6ec7669b21b74e6d6925473b5271256266ac19f6bd8c6a",
+      "bytes": 5894
+    },
+    {
+      "path": "examples/quadratic_motion.json",
+      "sha256": "eb2265afdce87cc46f9723f81b8149bb7e0d67dbf60ca388243c8a5c6927c69d",
+      "bytes": 4597
+    },
+    {
+      "path": "examples/reciprocal_branches.json",
+      "sha256": "0df681e41d23cd9e1fed8b0a6ab1c2f87c21acfef1470fe8112847fe139ab7e2",
+      "bytes": 1894
+    },
+    {
+      "path": "examples/reciprocal_motion.json",
+      "sha256": "f32a98943604c8fdb5b21fb1b2fdb4147fd8780aa2a963c65811216054d2ed35",
+      "bytes": 9118
+    },
+    {
+      "path": "examples/rotation_points.json",
+      "sha256": "24731562bc2dab14b05569389af01320b7c9c3336a201f69fea68a24ce8f954d",
+      "bytes": 4629
+    },
+    {
+      "path": "examples/text_transform.json",
+      "sha256": "1e1b858ce6282e3743ec4a9817ad82546f61acea1aa81fa7e1983a35e38bcad4",
+      "bytes": 4902
+    },
+    {
+      "path": "examples/verify_reciprocal.py",
+      "sha256": "fe0d3f464db8f349be282457cc063c63952d32cab1244a8bc3bf2d2174d15580",
+      "bytes": 5110
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "5c64053344524430e0c6ff8497cf7960d2c0a1280093fb029d5ac9d8502072c5",
+      "bytes": 1098
+    },
+    {
+      "path": "README.md",
+      "sha256": "b367960bc643637c91af3892083a84e73cc33e7ca0d6abcc98e4d5806fe5b51e",
+      "bytes": 7869
+    },
+    {
+      "path": "references/director-and-editing.md",
+      "sha256": "ebd51530073a47300b15360674e998d76a8bc80d12b745303d4d7a7d6a14da89",
+      "bytes": 3623
+    },
+    {
+      "path": "references/douyin-transcription.md",
+      "sha256": "6a8fec76272203e01ec0a3d410e3039c495d46ed360cc8d0c507b1555ff5b6d7",
+      "bytes": 7252
+    },
+    {
+      "path": "references/geometry.md",
+      "sha256": "183dd93b7014caabcb47b41261d2d36b8dee3bde1f5efa50b2e1021f88c8739a",
+      "bytes": 35642
+    },
+    {
+      "path": "references/maintenance-and-qa.md",
+      "sha256": "8a65f3b2657e1c9ab566d8d1d4e84ad1057ab593381d1f738321116ea8d91789",
+      "bytes": 15673
+    },
+    {
+      "path": "references/narration-preparation.md",
+      "sha256": "fd2f82f86067c9f02c9c16b3b5c452492253f7a7a8d8dc247592d41b57844c11",
+      "bytes": 15653
+    },
+    {
+      "path": "references/operate.md",
+      "sha256": "d5c6da0a97fc058bcd8d7e156a71536b9a7ed25f9ef7df6075095f986ce8e224",
+      "bytes": 8924
+    },
+    {
+      "path": "references/provenance.md",
+      "sha256": "fdc2acb9cb87d5f2a4fc1fc0c095739e6959eeaf86bcf07c830217f366b39741",
+      "bytes": 2861
+    },
+    {
+      "path": "references/video-covers.md",
+      "sha256": "2631fab3ec62cf7378bb8d15d649287c2dcc98daa532ea4f1909626c3ee880d1",
+      "bytes": 3398
+    },
+    {
+      "path": "scripts/douyin_launch.mjs",
+      "sha256": "828946582accd91a95f82590ae57e41d89916536ef0e06c5bb4a2bc4b3dfac3b",
+      "bytes": 863
+    },
+    {
+      "path": "scripts/douyin_setup.ps1",
+      "sha256": "1bc6994a80e4cf5d180352c667d2769f0ff060b2f977f5caa0fc4197372d0cf0",
+      "bytes": 9521
+    },
+    {
+      "path": "scripts/douyin_transcribe.mjs",
+      "sha256": "f847cf4c9083cb712467aaac3025297e509a9b5aabfe1bea0128fe23ad2f2dac",
+      "bytes": 4496
+    },
+    {
+      "path": "scripts/douyin_transcribe.ps1",
+      "sha256": "d5442b41e44c46149adba309d5d2b89ed23049b56eb66f7626096d9ee161cd04",
+      "bytes": 4306
+    },
+    {
+      "path": "scripts/setup.ps1",
+      "sha256": "e17eb97d7eb2d998d2d425064151a7c9243d8ef6cbb90d81e16bf3aacdc9e46b",
+      "bytes": 25908
+    },
+    {
+      "path": "scripts/split_narration.py",
+      "sha256": "3d8db92b5b010cec3722a6c23eb21832cd219c30ad83914210b648ba652be8e2",
+      "bytes": 5443
+    },
+    {
+      "path": "scripts/video.ps1",
+      "sha256": "9bdb0ed2f320324e9df3b52a4e3896d6248125c4229bcf72718a1d4f9f207e09",
+      "bytes": 2361
+    },
+    {
+      "path": "scripts/video.py",
+      "sha256": "775376808cecd3e0a3537d8e7cbed3b0b202dd580f8f0e23e4ac229c1b799361",
+      "bytes": 29706
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "1d263fde833d99910258cf4a76b2f92f0dd9e917b79e217c91621e0aa5f8bc02",
+      "bytes": 13962
+    },
+    {
+      "path": "tests/douyin_api.test.mjs",
+      "sha256": "6bff3c3d91f6ae69bb0744a984a103ab0f0d9b302202c87391fcfeaa8e2d7c09",
+      "bytes": 7592
+    },
+    {
+      "path": "tests/douyin_real_fixture.mjs",
+      "sha256": "a168a409a6ff8c4be675b7a662a0762dac505c9d8607976c2285acec6b8baa8b",
+      "bytes": 2486
+    },
+    {
+      "path": "tests/douyin_real_fixture.ps1",
+      "sha256": "82acd960bde85be9df75b51f85b6b1b600807b801ab3838bb4528d77c3de9aec",
+      "bytes": 1246
+    },
+    {
+      "path": "tests/douyin_worker_fixture.go",
+      "sha256": "f1f53150cd27b2095d8fbde6460c1ced6f77223af7ff86508f2a578546b79a4c",
+      "bytes": 656
+    },
+    {
+      "path": "tests/render_conic_smoke.py",
+      "sha256": "8a6143cee183da18d32a20446789e88833e3e62bef4d1146012b997ae27360cf",
+      "bytes": 2520
+    },
+    {
+      "path": "tests/test_conic.py",
+      "sha256": "6a7bc2b59d74a2391c96b515b3ffdf0854cfefaa8d6ddde8d5f90f37f617abff",
+      "bytes": 12500
+    },
+    {
+      "path": "tests/test_focus_padding.py",
+      "sha256": "6cbd43313ae612a0d4143d0e2b920eabe7ba8d8f5adabca1199ef6e0a71cf17c",
+      "bytes": 4992
+    },
+    {
+      "path": "tests/test_focus_transition.py",
+      "sha256": "22dcd2422d80cee6b304435ade30a530e3e2360c0e1a080c1245e7f274014438",
+      "bytes": 7940
+    },
+    {
+      "path": "tests/test_geometry_circle.py",
+      "sha256": "70393225ef46acf1663e07350fa9dc8ea556ca3049e715611f1a3e7370f28acb",
+      "bytes": 10292
+    },
+    {
+      "path": "tests/test_geometry_quadratic.py",
+      "sha256": "c4334cf432a47bdbe130c3942e473b65b95be39d3e01d104cc97b2057a7af553",
+      "bytes": 12764
+    },
+    {
+      "path": "tests/test_geometry_single_decode.py",
+      "sha256": "1e51ff0e00a83195554a63a44d37cc6f9761b54bea1f9f3b298b43c1fc610655",
+      "bytes": 9354
+    },
+    {
+      "path": "tests/test_highlight_masks.py",
+      "sha256": "0535159d4b3923d3d01d8bb4ad3017668e697c2f6d2c971d19ee9a2db9872703",
+      "bytes": 3797
+    },
+    {
+      "path": "tests/test_isolation.py",
+      "sha256": "115167eddad57c2061df378c3ab519ff6bb736733486145e84fe83227cdca06c",
+      "bytes": 3420
+    },
+    {
+      "path": "tests/test_long_lesson.py",
+      "sha256": "121235285e5b44ac74cdac6f179b3d30a2b21d16d7b9605b9aabe22ae6fc1ec1",
+      "bytes": 6171
+    },
+    {
+      "path": "tests/test_on_quadratic.py",
+      "sha256": "ab8aa3414ffd2601132f4d39c24ea5934cc95fe908e0ab3928b2968234dd5987",
+      "bytes": 6112
+    },
+    {
+      "path": "tests/test_provider_word_alignment.py",
+      "sha256": "55b62b5e68989546abfcf5763b65dbb94fd96af3a837bf27a50d60dc3ee681f7",
+      "bytes": 10296
+    },
+    {
+      "path": "tests/test_rotation.py",
+      "sha256": "259c6c7715c882416ec32041cecca22c9f08bff1f9dac8edabf21d1ab474641f",
+      "bytes": 6947
+    },
+    {
+      "path": "tests/test_text_readability.py",
+      "sha256": "c9c48d68d31ce9c8432b8290b517c19fac8f52a88f88e9425b6f3af283441258",
+      "bytes": 2290
+    },
+    {
+      "path": "tests/test_text_route.py",
+      "sha256": "2d108f70a6cd1f02ae9a89c65d0d7f26e55e983d6bbf31fe7537a80fca9ce888",
+      "bytes": 1295
+    },
+    {
+      "path": "tests/test_text_transform.py",
+      "sha256": "797e926d313b63b48148d4e0156d364dff7d9e89342f0213e60595b5127b232f",
+      "bytes": 2623
+    },
+    {
+      "path": "tests/test_text_transform_state.py",
+      "sha256": "5693afb919a9d2eb677cab824f2b8ab4a18312b9e43f245b9aa95bbf16b40239",
+      "bytes": 4043
+    },
+    {
+      "path": "tests/test_whisper_provenance.py",
+      "sha256": "d93e3479c8782d1708c91459831b11a5a2db3728c17d011e6f9db93e5b4bf428",
+      "bytes": 9883
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "8a9f6d77a733764a092bc9a7c89e200d48b4d080095ed2a7a8ab455e84bf7a5c",
+      "bytes": 3015
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "c4e64f4a6b222ea6fcfa4b56a37e289c0650dfe517194ab5317f73db12761fbb",
+      "bytes": 2776
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "Text transform candidate",
+  "audio_duration": 7,
+  "narration": "Synthetic silent capability fixture; no speech alignment.",
+  "canvas": {
+    "width": 960,
+    "height": 540,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "first",
+      "title": "Move and replace",
+      "start": 0,
+      "end": 5.5,
+      "world_bounds": [
+        -5,
+        5,
+        -3,
+        3
+      ],
+      "plot_rect": [
+        0,
+        0,
+        10,
+        6
+      ],
+      "problem": [],
+      "objects": [
+        {
+          "id": "lhs",
+          "type": "text",
+          "text": "x",
+          "position": [
+            -2,
+            0
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        },
+        {
+          "id": "sign",
+          "type": "text",
+          "text": "+",
+          "position": [
+            -1,
+            0
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        },
+        {
+          "id": "term",
+          "type": "text",
+          "text": "2",
+          "position": [
+            0,
+            0
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        },
+        {
+          "id": "equals",
+          "type": "text",
+          "text": "=",
+          "position": [
+            1,
+            0
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        },
+        {
+          "id": "rhs",
+          "type": "text",
+          "text": "6",
+          "position": [
+            2,
+            0
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        },
+        {
+          "id": "clone",
+          "type": "text",
+          "text": "(-2)",
+          "position": [
+            -1,
+            -2
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        }
+      ],
+      "actions": [
+        {
+          "type": "reveal",
+          "at": 0.5,
+          "duration": 0.5,
+          "ids": [
+            "lhs",
+            "sign",
+            "term",
+            "equals",
+            "rhs"
+          ]
+        },
+        {
+          "type": "text_transform",
+          "at": 1,
+          "duration": 1,
+          "items": [
+            {
+              "id": "sign",
+              "position": [
+                -1,
+                0
+              ],
+              "text": "−"
+            },
+            {
+              "id": "term",
+              "position": [
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text_transform",
+          "at": 2.25,
+          "duration": 0.75,
+          "items": [
+            {
+              "id": "term",
+              "position": [
+                0,
+                -1
+              ],
+              "text": "(-2)"
+            },
+            {
+              "id": "rhs",
+              "position": [
+                2,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text_transform",
+          "at": 3.25,
+          "duration": 0.5,
+          "items": [
+            {
+              "id": "term",
+              "position": [
+                -1,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "type": "translate_copy",
+          "at": 4,
+          "duration": 0.5,
+          "sources": [
+            "term"
+          ],
+          "targets": [
+            "clone"
+          ],
+          "vector": [
+            0,
+            -1
+          ],
+          "style": "continuous"
+        },
+        {
+          "type": "hide",
+          "at": 4.75,
+          "duration": 0.5,
+          "ids": [
+            "term",
+            "clone"
+          ]
+        }
+      ],
+      "checks": []
+    },
+    {
+      "id": "second",
+      "title": "Fresh chapter state",
+      "start": 5.5,
+      "end": 7,
+      "world_bounds": [
+        -5,
+        5,
+        -3,
+        3
+      ],
+      "problem": [],
+      "objects": [
+        {
+          "id": "term",
+          "type": "text",
+          "text": "2",
+          "position": [
+            0,
+            0
+          ],
+          "font_size": 40,
+          "color": "#FFFFFF",
+          "formula_group": "eq"
+        }
+      ],
+      "actions": [
+        {
+          "type": "reveal",
+          "at": 6,
+          "duration": 0.5,
+          "ids": [
+            "term"
+          ]
+        }
+      ],
+      "checks": []
+    }
+  ]
+}

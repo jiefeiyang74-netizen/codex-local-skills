@@ -1,0 +1,463 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "反比例函数能力验证",
+  "narration": "Synthetic fixture; no narration alignment claim.",
+  "audio_duration": 16,
+  "canvas": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "motion",
+      "title": "动点、投影与矩形同步",
+      "start": 0,
+      "end": 8,
+      "world_bounds": [
+        -5,
+        5,
+        -5,
+        5
+      ],
+      "plot_rect": [
+        0,
+        0.2,
+        10.2,
+        9
+      ],
+      "formula_rect": [
+        0,
+        -5.3,
+        10.3,
+        2.3
+      ],
+      "problem": [
+        "y = k/x   k ≠ 0   x ≠ 0"
+      ],
+      "parameters": {
+        "k": 2,
+        "x": 0.7
+      },
+      "objects": [
+        {
+          "id": "axes",
+          "type": "coordinate_axes",
+          "x_ticks": [
+            -4,
+            -2,
+            2,
+            4
+          ],
+          "y_ticks": [
+            -4,
+            -2,
+            2,
+            4
+          ]
+        },
+        {
+          "id": "curve",
+          "type": "reciprocal",
+          "k": {
+            "parameter": "k",
+            "scale": 1,
+            "offset": 0
+          },
+          "color": "#52C7EA"
+        },
+        {
+          "id": "O",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "X",
+          "type": "point",
+          "xy": [
+            1,
+            0
+          ]
+        },
+        {
+          "id": "Y",
+          "type": "point",
+          "xy": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "P",
+          "type": "point",
+          "derive": {
+            "type": "on_reciprocal",
+            "curve": "curve",
+            "x": {
+              "parameter": "x",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "P",
+          "color": "#FFD166"
+        },
+        {
+          "id": "H",
+          "type": "point",
+          "derive": {
+            "type": "project",
+            "source": "P",
+            "line": [
+              "O",
+              "X"
+            ]
+          },
+          "label": "H",
+          "label_offset": [
+            0,
+            -0.5
+          ]
+        },
+        {
+          "id": "V",
+          "type": "point",
+          "derive": {
+            "type": "project",
+            "source": "P",
+            "line": [
+              "O",
+              "Y"
+            ]
+          },
+          "label": "V"
+        },
+        {
+          "id": "box",
+          "type": "polygon",
+          "points": [
+            "O",
+            "H",
+            "P",
+            "V"
+          ],
+          "color": "#FFD166",
+          "fill_opacity": 0.18
+        },
+        {
+          "id": "PH",
+          "type": "line",
+          "a": "P",
+          "b": "H",
+          "dashed": true
+        },
+        {
+          "id": "PV",
+          "type": "line",
+          "a": "P",
+          "b": "V",
+          "dashed": true
+        }
+      ],
+      "actions": [
+        {
+          "at": 0.6,
+          "duration": 0.4,
+          "type": "reveal",
+          "ids": [
+            "axes"
+          ]
+        },
+        {
+          "at": 1,
+          "duration": 0.7,
+          "type": "reveal",
+          "ids": [
+            "curve"
+          ],
+          "style": "draw"
+        },
+        {
+          "at": 1.7,
+          "duration": 0.3,
+          "type": "reveal",
+          "ids": [
+            "box",
+            "P",
+            "H",
+            "V",
+            "PH",
+            "PV"
+          ]
+        },
+        {
+          "at": 2,
+          "duration": 2,
+          "type": "set_parameter",
+          "parameter": "x",
+          "value": 3.5
+        },
+        {
+          "at": 4.1,
+          "duration": 1.4,
+          "type": "set_parameter",
+          "parameter": "k",
+          "value": 4
+        },
+        {
+          "at": 5.6,
+          "duration": 1,
+          "type": "set_parameter",
+          "parameter": "x",
+          "value": 1
+        },
+        {
+          "at": 7,
+          "duration": 0.3,
+          "type": "hide",
+          "ids": [
+            "curve"
+          ]
+        },
+        {
+          "at": 7.4,
+          "duration": 0.3,
+          "type": "reveal",
+          "ids": [
+            "curve"
+          ],
+          "style": "draw"
+        }
+      ],
+      "checks": []
+    },
+    {
+      "id": "negative",
+      "title": "负 k 的双曲线",
+      "start": 8,
+      "end": 16,
+      "world_bounds": [
+        -5,
+        5,
+        -5,
+        5
+      ],
+      "plot_rect": [
+        0,
+        0.2,
+        10.2,
+        9
+      ],
+      "formula_rect": [
+        0,
+        -5.3,
+        10.3,
+        2.3
+      ],
+      "problem": [
+        "y = k/x   k ≠ 0   x ≠ 0"
+      ],
+      "parameters": {
+        "k": -2,
+        "x": -0.7
+      },
+      "objects": [
+        {
+          "id": "axes",
+          "type": "coordinate_axes",
+          "x_ticks": [
+            -4,
+            -2,
+            2,
+            4
+          ],
+          "y_ticks": [
+            -4,
+            -2,
+            2,
+            4
+          ]
+        },
+        {
+          "id": "curve",
+          "type": "reciprocal",
+          "k": {
+            "parameter": "k",
+            "scale": 1,
+            "offset": 0
+          },
+          "color": "#52C7EA"
+        },
+        {
+          "id": "O",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "X",
+          "type": "point",
+          "xy": [
+            1,
+            0
+          ]
+        },
+        {
+          "id": "Y",
+          "type": "point",
+          "xy": [
+            0,
+            1
+          ]
+        },
+        {
+          "id": "P",
+          "type": "point",
+          "derive": {
+            "type": "on_reciprocal",
+            "curve": "curve",
+            "x": {
+              "parameter": "x",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "P",
+          "color": "#FFD166"
+        },
+        {
+          "id": "H",
+          "type": "point",
+          "derive": {
+            "type": "project",
+            "source": "P",
+            "line": [
+              "O",
+              "X"
+            ]
+          },
+          "label": "H",
+          "label_offset": [
+            0,
+            -0.5
+          ]
+        },
+        {
+          "id": "V",
+          "type": "point",
+          "derive": {
+            "type": "project",
+            "source": "P",
+            "line": [
+              "O",
+              "Y"
+            ]
+          },
+          "label": "V"
+        },
+        {
+          "id": "box",
+          "type": "polygon",
+          "points": [
+            "O",
+            "H",
+            "P",
+            "V"
+          ],
+          "color": "#FFD166",
+          "fill_opacity": 0.18
+        },
+        {
+          "id": "PH",
+          "type": "line",
+          "a": "P",
+          "b": "H",
+          "dashed": true
+        },
+        {
+          "id": "PV",
+          "type": "line",
+          "a": "P",
+          "b": "V",
+          "dashed": true
+        }
+      ],
+      "actions": [
+        {
+          "at": 8.6,
+          "duration": 0.4,
+          "type": "reveal",
+          "ids": [
+            "axes"
+          ]
+        },
+        {
+          "at": 9,
+          "duration": 0.7,
+          "type": "reveal",
+          "ids": [
+            "curve"
+          ],
+          "style": "draw"
+        },
+        {
+          "at": 9.7,
+          "duration": 0.3,
+          "type": "reveal",
+          "ids": [
+            "box",
+            "P",
+            "H",
+            "V",
+            "PH",
+            "PV"
+          ]
+        },
+        {
+          "at": 10,
+          "duration": 2,
+          "type": "set_parameter",
+          "parameter": "x",
+          "value": -3.5
+        },
+        {
+          "at": 12.1,
+          "duration": 1.4,
+          "type": "set_parameter",
+          "parameter": "k",
+          "value": -4
+        },
+        {
+          "at": 13.6,
+          "duration": 1,
+          "type": "set_parameter",
+          "parameter": "x",
+          "value": -1
+        },
+        {
+          "at": 15,
+          "duration": 0.3,
+          "type": "hide",
+          "ids": [
+            "curve"
+          ]
+        },
+        {
+          "at": 15.4,
+          "duration": 0.3,
+          "type": "reveal",
+          "ids": [
+            "curve"
+          ],
+          "style": "draw"
+        }
+      ],
+      "checks": []
+    }
+  ]
+}

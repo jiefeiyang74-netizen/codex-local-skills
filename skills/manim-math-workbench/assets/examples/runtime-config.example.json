@@ -1,0 +1,6 @@
+{
+  "python_exe": "C:/path/to/python.exe",
+  "ffmpeg_exe": "C:/path/to/ffmpeg.exe",
+  "whisper_exe": "C:/path/to/whisper-cli.exe",
+  "whisper_model": "C:/path/to/ggml-small.bin"
+}

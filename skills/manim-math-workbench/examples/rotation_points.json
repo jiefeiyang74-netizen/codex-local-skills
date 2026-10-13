@@ -1,0 +1,224 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "Constrained rotation",
+  "audio_duration": 6,
+  "narration": "Synthetic silent capability fixture; no speech alignment.",
+  "canvas": {
+    "width": 1280,
+    "height": 720,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "rotation",
+      "title": "Rigid rotation and live dependency",
+      "start": 0,
+      "end": 6,
+      "world_bounds": [
+        -2,
+        5,
+        -4,
+        3
+      ],
+      "plot_rect": [
+        0,
+        -0.4,
+        10,
+        6
+      ],
+      "parameters": {
+        "theta": 0
+      },
+      "problem": [],
+      "objects": [
+        {
+          "id": "O",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ],
+          "label": "O",
+          "label_offset": [
+            -0.3,
+            -0.3
+          ]
+        },
+        {
+          "id": "C",
+          "type": "point",
+          "xy": [
+            3,
+            0
+          ],
+          "label": "C",
+          "label_offset": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "id": "P",
+          "type": "point",
+          "xy": [
+            1,
+            1
+          ],
+          "label": "P",
+          "label_offset": [
+            -0.3,
+            0.3
+          ]
+        },
+        {
+          "id": "S",
+          "type": "point",
+          "derive": {
+            "type": "rotate",
+            "source": "O",
+            "center": "O",
+            "angle": {
+              "parameter": "theta",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "S",
+          "label_offset": [
+            0.3,
+            0.3
+          ],
+          "color": "#52C7EA"
+        },
+        {
+          "id": "R",
+          "type": "point",
+          "derive": {
+            "type": "rotate",
+            "source": "C",
+            "center": "O",
+            "angle": {
+              "parameter": "theta",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "R",
+          "label_offset": [
+            0.3,
+            -0.3
+          ],
+          "color": "#52C7EA"
+        },
+        {
+          "id": "Q",
+          "type": "point",
+          "derive": {
+            "type": "rotate",
+            "source": "P",
+            "center": "O",
+            "angle": {
+              "parameter": "theta",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "Q",
+          "label_offset": [
+            0.3,
+            0.3
+          ],
+          "color": "#52C7EA"
+        },
+        {
+          "id": "F",
+          "type": "point",
+          "derive": {
+            "type": "rotate",
+            "source": "P",
+            "center": "O",
+            "angle": -60
+          },
+          "label": "F",
+          "label_offset": [
+            0.8,
+            -0.3
+          ],
+          "color": "#FFCA55"
+        },
+        {
+          "id": "edge",
+          "type": "line",
+          "a": "R",
+          "b": "Q",
+          "color": "#52C7EA"
+        },
+        {
+          "id": "triangle",
+          "type": "polygon",
+          "points": [
+            "S",
+            "R",
+            "Q"
+          ],
+          "color": "#52C7EA",
+          "fill_opacity": 0.12
+        },
+        {
+          "id": "original",
+          "type": "polygon",
+          "points": [
+            "O",
+            "C",
+            "P"
+          ],
+          "color": "#999999",
+          "fill_opacity": 0
+        }
+      ],
+      "actions": [
+        {
+          "type": "reveal",
+          "at": 0.5,
+          "duration": 0.3,
+          "ids": [
+            "C",
+            "P",
+            "R",
+            "Q",
+            "F",
+            "edge",
+            "triangle",
+            "original"
+          ]
+        },
+        {
+          "type": "set_parameter",
+          "at": 1,
+          "duration": 2,
+          "parameter": "theta",
+          "value": -60
+        },
+        {
+          "type": "move",
+          "at": 3.5,
+          "duration": 1,
+          "positions": {
+            "P": [
+              2,
+              1
+            ]
+          }
+        },
+        {
+          "type": "set_parameter",
+          "at": 4.7,
+          "duration": 0.8,
+          "parameter": "theta",
+          "value": -90
+        }
+      ],
+      "checks": []
+    }
+  ]
+}

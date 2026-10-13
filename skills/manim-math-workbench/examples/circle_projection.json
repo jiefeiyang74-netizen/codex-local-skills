@@ -1,0 +1,31 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "圆周运动与投影",
+  "audio_duration": 7,
+  "narration": "本示例说明圆周运动与实时投影。制作时请改为真实配音并重新绑定动作锚点。",
+  "canvas": {"width": 1080, "height": 1440, "fps": 60},
+  "chapters": [{
+    "id": "circle_demo", "title": "圆上的点与垂足", "start": 0, "end": 7,
+    "world_bounds": [-2, 2, -2, 2], "problem": ["单位圆与横轴投影"],
+    "objects": [
+      {"id": "O", "type": "point", "xy": [0, 0], "label": "O", "label_offset": [0, -0.4]},
+      {"id": "X", "type": "point", "xy": [1.6, 0]},
+      {"id": "A", "type": "point", "xy": [0.8, 0.6], "label": "A", "color": "#4DDDC8"},
+      {"id": "H", "type": "point", "derive": {"type": "project", "source": "A", "line": ["O", "X"]}, "label": "H", "label_offset": [0, -0.8]},
+      {"id": "unit_circle", "type": "circle", "center": "O", "radius": 1, "color": "#6BAAFF"},
+      {"id": "axis", "type": "line", "a": "O", "b": "X", "kind": "line", "color": "#888888"},
+      {"id": "radius", "type": "line", "a": "O", "b": "A", "color": "#FFD166"},
+      {"id": "projection", "type": "line", "a": "A", "b": "H", "dashed": true}
+    ],
+    "actions": [
+      {"at": 0.5, "duration": 1, "type": "reveal", "ids": ["O", "A", "H", "unit_circle", "axis", "radius", "projection"], "style": "draw"},
+      {"at": 2, "duration": 2, "type": "move_on_circle", "point": "A", "circle": "unit_circle", "angle": 1.5707963267948966},
+      {"at": 4.5, "duration": 2, "type": "move_on_circle", "point": "A", "circle": "unit_circle", "angle": -1.5707963267948966}
+    ],
+    "checks": [
+      {"type": "distance", "points": ["O", "A"], "value": 1},
+      {"type": "collinear", "points": ["O", "H", "X"]},
+      {"type": "perpendicular", "lines": [["A", "H"], ["O", "X"]]}
+    ]
+  }]
+}

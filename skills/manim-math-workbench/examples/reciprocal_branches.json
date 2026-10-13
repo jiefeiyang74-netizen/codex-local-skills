@@ -1,0 +1,100 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "逐支绘制验证",
+  "narration": "Synthetic branch fixture; not production narration.",
+  "audio_duration": 3.2,
+  "canvas": {
+    "width": 1080,
+    "height": 1440,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "branches",
+      "title": "先正x，再负x",
+      "start": 0,
+      "end": 3.2,
+      "world_bounds": [
+        -5,
+        5,
+        -5,
+        5
+      ],
+      "plot_rect": [
+        0,
+        0.2,
+        10.2,
+        9
+      ],
+      "formula_rect": [
+        0,
+        -5.3,
+        10.3,
+        2.3
+      ],
+      "problem": [
+        "y = 2/x"
+      ],
+      "objects": [
+        {
+          "id": "axes",
+          "type": "coordinate_axes",
+          "x_ticks": [
+            -4,
+            -2,
+            2,
+            4
+          ],
+          "y_ticks": [
+            -4,
+            -2,
+            2,
+            4
+          ]
+        },
+        {
+          "id": "positive",
+          "type": "reciprocal",
+          "k": 2,
+          "branch": "positive_x"
+        },
+        {
+          "id": "negative",
+          "type": "reciprocal",
+          "k": 2,
+          "branch": "negative_x"
+        }
+      ],
+      "actions": [
+        {
+          "at": 0.6,
+          "duration": 0.2,
+          "type": "reveal",
+          "ids": [
+            "axes"
+          ],
+          "style": "fade"
+        },
+        {
+          "at": 1.0,
+          "duration": 0.6,
+          "type": "reveal",
+          "ids": [
+            "positive"
+          ],
+          "style": "draw"
+        },
+        {
+          "at": 2.0,
+          "duration": 0.6,
+          "type": "reveal",
+          "ids": [
+            "negative"
+          ],
+          "style": "draw"
+        }
+      ],
+      "checks": []
+    }
+  ]
+}

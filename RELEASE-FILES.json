@@ -1,0 +1,682 @@
+{
+  "format": 1,
+  "version": "v1.0.0",
+  "release_date": "2026-10-13",
+  "skills": [
+    "app-factory",
+    "manim-math-workbench",
+    "replace-logo-with-cutout"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "size": 81,
+      "sha256": "61fc5dd46c5eabd0a74e78ba099bbefcc74c8e9f6271506501aa2edc867212ef"
+    },
+    {
+      "path": ".github/workflows/validate.yml",
+      "size": 491,
+      "sha256": "b6495c2568661574b69e438cc451c5cd84d2496f727dccea4a15f51a57c34879"
+    },
+    {
+      "path": ".gitignore",
+      "size": 147,
+      "sha256": "25b5e24059f373216b80290d5982fdc8c4cc6b747a07f0005a1f907d7ca3b1ee"
+    },
+    {
+      "path": "EXTERNAL_SKILLS.md",
+      "size": 1310,
+      "sha256": "4850ee7eae879cdd53d208e5fcea39b74ecdd00bb0b415af64aa61273ea1b18c"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1077,
+      "sha256": "e177f634f25f3c00dda5ef7da69e9d87359194ea0fa1f3c1a61697c96a0666ef"
+    },
+    {
+      "path": "README.md",
+      "size": 3826,
+      "sha256": "37e7d9242291c47e4116ca0e6108e82cfa0834fee645782d24d3809d9ac946b5"
+    },
+    {
+      "path": "RELEASE_NOTES.md",
+      "size": 840,
+      "sha256": "b7244b315a30743a2890763b5eabe9be22c8fc9e9eabdd3c9ba5734204198d1b"
+    },
+    {
+      "path": "requirements-dev.txt",
+      "size": 17,
+      "sha256": "195d92b82f91999cc32a0a29cf4f1969d11a2d4dac95317dd6cad57b61e1add0"
+    },
+    {
+      "path": "skills/app-factory/agents/openai.yaml",
+      "size": 293,
+      "sha256": "de138994ca976a9d8c1b10c1da0bc7640342b45ae9c3b904583185d04a419cb6"
+    },
+    {
+      "path": "skills/app-factory/LICENSE",
+      "size": 1077,
+      "sha256": "e177f634f25f3c00dda5ef7da69e9d87359194ea0fa1f3c1a61697c96a0666ef"
+    },
+    {
+      "path": "skills/app-factory/PROVENANCE.md",
+      "size": 1837,
+      "sha256": "73b165f3efd1fb9b47d91379b16c3e507ed947425319fe563fecd27a8da35405"
+    },
+    {
+      "path": "skills/app-factory/README.md",
+      "size": 4339,
+      "sha256": "933044066d30fe61e3bd09d119f4507c85d22fb5c0f3e089dac8cc3239a42e1c"
+    },
+    {
+      "path": "skills/app-factory/SKILL.md",
+      "size": 7223,
+      "sha256": "f623de76f96f72383335635d3d65746990b0c1a24f0df1804ed94d405ced5e3f"
+    },
+    {
+      "path": "skills/manim-math-workbench/agents/openai.yaml",
+      "size": 461,
+      "sha256": "5c27bf42fd63b11db5a31d4991bb0eeacfe4a88ec9c6c0bbe97c70b3437d417c"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/NOTICE.md",
+      "size": 2366,
+      "sha256": "129ebfbf466b9ddb1e2251deb63ec199ea76de7b7d516fe2d1fab89a2556d0c7"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/runtime-lock.json",
+      "size": 349,
+      "sha256": "3c5807ef071001eb2aee5fa90d266d2e87b4b3ae31eb8eca17167a5f6b5ce715"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/go.mod",
+      "size": 55,
+      "sha256": "2272b29be96731597940291927d8578413e31ea7db7efe128e9b99cb9a790ac2"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/internal/downloader/downloader.go",
+      "size": 15489,
+      "sha256": "29cadf8affebdc6d194061d83065e87b4f1bc9707e3967649dbaa99d1313fbfb"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/internal/downloader/portable_test.go",
+      "size": 516,
+      "sha256": "c60e7a5590b289da6e3a6e8f1ef0cd30361e818552339e15a4207346854dd0b1"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/internal/downloader/url_guard.go",
+      "size": 717,
+      "sha256": "c277ba7569536d95c155a47b331447afc22da8372feb7386a974810f3c775ea3"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/internal/resolver/portable_test.go",
+      "size": 502,
+      "sha256": "aacb475537bffba230cd10b00877fc629ade842fea8be9292546649f6448617a"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/internal/resolver/resolver.go",
+      "size": 4403,
+      "sha256": "4807edad5bfbfb59f4f5087a561022af50d969dafc6f7afd86511d59d2871978"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/internal/transcriber/local.go",
+      "size": 5974,
+      "sha256": "b8c2ab39eed3b2d48f566d25e97cebf0166778d4ad861183b725e2ebc0b0f49f"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/LICENSE",
+      "size": 1088,
+      "sha256": "f31cff7fc10e3b8ae4bbe674f0f6f53b6d2fd05a86a2f4efc556c88de982517e"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/source/main.go",
+      "size": 1609,
+      "sha256": "bac85ffb17e6b1fa80f4e6f6abeb58b95e5335b000e19ba07c71f585a0a55ff9"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/web/package-lock.json",
+      "size": 712,
+      "sha256": "b71e4725963a9f3f05392ec2cb2fce05321feba1c9ae8c8f253fa68bc8f7a32e"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/web/package.json",
+      "size": 214,
+      "sha256": "e997cda6ea2dfae88dd0714fc6a6c4d9243f9f625b1b6276b372c999144c2a56"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/web/scripts/fetch_douyin_media.mjs",
+      "size": 4916,
+      "sha256": "bc5a34fcb9f2bc54b36a3fea75ab904aa059ae29e8620a36bd2d3c98463cd10a"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/douyin/web/server.mjs",
+      "size": 7564,
+      "sha256": "b2453eff5b42d2ae5baf4514af2b5f2919e2f1f1d888e9a4127a10d76fa01721"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/__init__.py",
+      "size": 353,
+      "sha256": "3050813dce75798525a316a5422743bc751f9e945687f10993178deb676a069d"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/conic.py",
+      "size": 7506,
+      "sha256": "f2a19bce787d2bd7c8b49cc093109c2af24e4d34bc650e542914d456896570b3"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/conic_runtime.py",
+      "size": 1257,
+      "sha256": "3290810fe335e1b9e9d4815b5bd37755322130e123997bf48c77661e854a3b1d"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/developable.py",
+      "size": 4814,
+      "sha256": "cc565376227a184564e48c703cd67d4ccb2997bc71a74425020a96bf6ad8bc92"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/glyph_layout.py",
+      "size": 2866,
+      "sha256": "8122a0ba47d6763c534313918a8d917cfa446d379023f9410292903974ec9f6c"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/math2d.py",
+      "size": 21450,
+      "sha256": "f29adfd2356f39edaca42bde38132b508413b33b84ba8ce4ac4d9d96061c2e99"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/native_encoder.py",
+      "size": 6222,
+      "sha256": "8483f02288e448e17887bdf0501182a3469a16b82dbc1170e6f6d4e4472ff134"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/native_encoding.md",
+      "size": 1380,
+      "sha256": "79ab8c0f953244affef2a3f2b134aaad6b106e01a50c900e09b567d93fd8f771"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/pipeline.py",
+      "size": 54906,
+      "sha256": "54bf03cdbafaf30cb2771e6256ba72b4d5bcb06904ebf23dd859bf3a5abcf06f"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/quadratic.py",
+      "size": 7697,
+      "sha256": "1055ca132d2b5859b2675574d37bfd43fd7b0624d43c02397b60c531700bf9a1"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/quadratic_runtime.py",
+      "size": 5737,
+      "sha256": "1e015269929d75642504aa8d0eba475e79005e91c460c3e0386398e2441a547c"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/qwen_alignment.md",
+      "size": 2390,
+      "sha256": "7228436015b9925e31a5fd220dbc644e3cc4c96caec4e8506775c02e5362effb"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/qwen_provenance.py",
+      "size": 17458,
+      "sha256": "e08e09a084d060ef1ffe47e5c3912b79c97c195dbae1cc7f0fa74cb305e18f41"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/reciprocal.py",
+      "size": 6288,
+      "sha256": "d63e335f5dcea7a8fe7ea667ef01035a1ad114b397c5b24cc68da1accaff668f"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/runtime.py",
+      "size": 54603,
+      "sha256": "ea85be076439eb45b094cb77cd6a3e74eae04eb115224a849e618df2ca790a5c"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/schema.py",
+      "size": 46718,
+      "sha256": "2e80b90fb9b39de704f6a396887fd0dfd44092a7e0cf95e95e37533facedfb73"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/whisper_provenance.py",
+      "size": 18312,
+      "sha256": "3bd6c40b5a3d6846130817b18676d09f4053e6bcef7a81b6893b53376a5438ed"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/prompts/animation_director.md",
+      "size": 30726,
+      "sha256": "a741bc1c6ac54b0e3031821ed63c94b06d66abfed7aceaa66238bfc821eef536"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/prompts/geometry_director.md",
+      "size": 34184,
+      "sha256": "06a6c4c3bfe23529ba4d2420d7eb1865739620be8e0388af381792230ecf91fb"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/__init__.py",
+      "size": 758,
+      "sha256": "29430028af5f7af586f5de7e1f8ba97378f5be5277bfad7536cbbc9a9235f823"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/audio_timing.py",
+      "size": 26446,
+      "sha256": "7b758ec3170310fd11da4242fe8dfd13af39faae51c1ba0ee25b3571581bb91d"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/capabilities.py",
+      "size": 2985,
+      "sha256": "95bcdb0837509d891a044f0e0761d8334998f04eb6cce6b680ecd917fcd9b729"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/cauchy_min_motion.py",
+      "size": 19212,
+      "sha256": "a817e7c34ef3fc57d04b5564088745b8f453945edd3584768db4b9e418d8cd53"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/circle_max_motion.py",
+      "size": 14884,
+      "sha256": "c1d7d8d5d42b1b9a03662735ac32ee910ac455df3bc297ae2987e7503400864e"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/compiler.py",
+      "size": 2534,
+      "sha256": "3e6a941a8232adffd707af802bc41ead035b5a2d42bf8169429d305d9c9f7789"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/equation_motion.py",
+      "size": 2190,
+      "sha256": "8d0aadf04b75664642b33f936c613e000c8221c484ab8b7e64bd63c09b707f17"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/part_motion.py",
+      "size": 7542,
+      "sha256": "4785618c3b5d1d19c45985fa4bb00c3eb92484a342788bef2b27db0684a083e8"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/partial_cache.py",
+      "size": 2424,
+      "sha256": "0223381a67e90e176ca01677fa8f844275cb2a2cac908cb549450886b7e8938e"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/rendering.py",
+      "size": 47111,
+      "sha256": "2c075c61a24920e8d0562a36a3dfbb8f2012bd58d062165571b65ae70b3b49b0"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/runtime_template.py",
+      "size": 104895,
+      "sha256": "e75bc17689610ce22d9d691bcfb1866355414449280fb068b6fddde87bda8314"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/storyboard.py",
+      "size": 103789,
+      "sha256": "fc45a4bd6b0f57ee6ad82c7c3cf4c1e1b5c8cd0d618d2dbdc74c39d327614cf5"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/v3/unit_equation.py",
+      "size": 9565,
+      "sha256": "a204e04bb8901a773cee775093d2e56b7e7f74e4f09e621e253d83e0d9447bf0"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/examples/README.md",
+      "size": 510,
+      "sha256": "4c59b245f6a44b341ad30e1d56cb5054a54e0d0c3e0bb8098158f9b4a25dd7de"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/examples/runtime-config.example.json",
+      "size": 180,
+      "sha256": "a62fd12bcca4b17825d09296a15e6cebdd7105e6a5341080c9fd223cfbe8a33e"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/examples/smoke_request.json",
+      "size": 185,
+      "sha256": "44f8305426c6fef5da4f7fad2895d5bc3325535a1a2b5e566bd836f5ed79dcb2"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/examples/smoke_storyboard.json",
+      "size": 1283,
+      "sha256": "aa1068b06aa070c1ee78f616bd1751b58517fac4072124373eb01d189c21affa"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/runtime-lock.json",
+      "size": 3187,
+      "sha256": "e8ce8eacaefd7941fbd84b275fce9952eb80b74f6f8e7d7e9883b2c4d01ecb5b"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/chapter_heading.json",
+      "size": 4231,
+      "sha256": "323de3346a5c1f8fa16884adfce26c98c14357ddc85985d5f21a563fe0d61334"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/circle_projection.json",
+      "size": 1830,
+      "sha256": "df4465ef4150442b3516dfd6812f31f0cbed5f830dd4a96bc88c949667f3cb1c"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/conic_motion.json",
+      "size": 4512,
+      "sha256": "62daeab7e59f19eabe3cd7a664da4a8aa22eea90fac9575ad3092d81786ff84a"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/geometry_minimal.json",
+      "size": 834,
+      "sha256": "868afcf779e2e1403afdf1a06c4c87be1bc047ac87b5523d318d6ca6f734f92b"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/long_lesson_minimal.json",
+      "size": 1614,
+      "sha256": "940bf5316daa3b5abfe18b4e64e1a9c72b2dea9192897a7c51f3fa799ab59337"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/quadratic_derived_points.json",
+      "size": 5894,
+      "sha256": "278ccced722fd78ccf6ec7669b21b74e6d6925473b5271256266ac19f6bd8c6a"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/quadratic_motion.json",
+      "size": 4597,
+      "sha256": "eb2265afdce87cc46f9723f81b8149bb7e0d67dbf60ca388243c8a5c6927c69d"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/reciprocal_branches.json",
+      "size": 1894,
+      "sha256": "0df681e41d23cd9e1fed8b0a6ab1c2f87c21acfef1470fe8112847fe139ab7e2"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/reciprocal_motion.json",
+      "size": 9118,
+      "sha256": "f32a98943604c8fdb5b21fb1b2fdb4147fd8780aa2a963c65811216054d2ed35"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/rotation_points.json",
+      "size": 4629,
+      "sha256": "24731562bc2dab14b05569389af01320b7c9c3336a201f69fea68a24ce8f954d"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/text_transform.json",
+      "size": 4902,
+      "sha256": "1e1b858ce6282e3743ec4a9817ad82546f61acea1aa81fa7e1983a35e38bcad4"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/verify_reciprocal.py",
+      "size": 5110,
+      "sha256": "fe0d3f464db8f349be282457cc063c63952d32cab1244a8bc3bf2d2174d15580"
+    },
+    {
+      "path": "skills/manim-math-workbench/LICENSE",
+      "size": 1098,
+      "sha256": "5c64053344524430e0c6ff8497cf7960d2c0a1280093fb029d5ac9d8502072c5"
+    },
+    {
+      "path": "skills/manim-math-workbench/PACKAGE-MANIFEST.json",
+      "size": 19027,
+      "sha256": "e9f39fd395ee956d648248c3029f07fda376f8c2f6b2e3b5c04698e4aecd046d"
+    },
+    {
+      "path": "skills/manim-math-workbench/README.md",
+      "size": 7869,
+      "sha256": "b367960bc643637c91af3892083a84e73cc33e7ca0d6abcc98e4d5806fe5b51e"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/director-and-editing.md",
+      "size": 3623,
+      "sha256": "ebd51530073a47300b15360674e998d76a8bc80d12b745303d4d7a7d6a14da89"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/douyin-transcription.md",
+      "size": 7252,
+      "sha256": "6a8fec76272203e01ec0a3d410e3039c495d46ed360cc8d0c507b1555ff5b6d7"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/geometry.md",
+      "size": 35642,
+      "sha256": "183dd93b7014caabcb47b41261d2d36b8dee3bde1f5efa50b2e1021f88c8739a"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/maintenance-and-qa.md",
+      "size": 15673,
+      "sha256": "8a65f3b2657e1c9ab566d8d1d4e84ad1057ab593381d1f738321116ea8d91789"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/narration-preparation.md",
+      "size": 15653,
+      "sha256": "fd2f82f86067c9f02c9c16b3b5c452492253f7a7a8d8dc247592d41b57844c11"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/operate.md",
+      "size": 8924,
+      "sha256": "d5c6da0a97fc058bcd8d7e156a71536b9a7ed25f9ef7df6075095f986ce8e224"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/provenance.md",
+      "size": 2861,
+      "sha256": "fdc2acb9cb87d5f2a4fc1fc0c095739e6959eeaf86bcf07c830217f366b39741"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/video-covers.md",
+      "size": 3398,
+      "sha256": "2631fab3ec62cf7378bb8d15d649287c2dcc98daa532ea4f1909626c3ee880d1"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/douyin_launch.mjs",
+      "size": 863,
+      "sha256": "828946582accd91a95f82590ae57e41d89916536ef0e06c5bb4a2bc4b3dfac3b"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/douyin_setup.ps1",
+      "size": 9521,
+      "sha256": "1bc6994a80e4cf5d180352c667d2769f0ff060b2f977f5caa0fc4197372d0cf0"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/douyin_transcribe.mjs",
+      "size": 4496,
+      "sha256": "f847cf4c9083cb712467aaac3025297e509a9b5aabfe1bea0128fe23ad2f2dac"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/douyin_transcribe.ps1",
+      "size": 4306,
+      "sha256": "d5442b41e44c46149adba309d5d2b89ed23049b56eb66f7626096d9ee161cd04"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/setup.ps1",
+      "size": 25908,
+      "sha256": "e17eb97d7eb2d998d2d425064151a7c9243d8ef6cbb90d81e16bf3aacdc9e46b"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/split_narration.py",
+      "size": 5443,
+      "sha256": "3d8db92b5b010cec3722a6c23eb21832cd219c30ad83914210b648ba652be8e2"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/video.ps1",
+      "size": 2361,
+      "sha256": "9bdb0ed2f320324e9df3b52a4e3896d6248125c4229bcf72718a1d4f9f207e09"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/video.py",
+      "size": 29706,
+      "sha256": "775376808cecd3e0a3537d8e7cbed3b0b202dd580f8f0e23e4ac229c1b799361"
+    },
+    {
+      "path": "skills/manim-math-workbench/SKILL.md",
+      "size": 13962,
+      "sha256": "1d263fde833d99910258cf4a76b2f92f0dd9e917b79e217c91621e0aa5f8bc02"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/douyin_api.test.mjs",
+      "size": 7592,
+      "sha256": "6bff3c3d91f6ae69bb0744a984a103ab0f0d9b302202c87391fcfeaa8e2d7c09"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/douyin_real_fixture.mjs",
+      "size": 2486,
+      "sha256": "a168a409a6ff8c4be675b7a662a0762dac505c9d8607976c2285acec6b8baa8b"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/douyin_real_fixture.ps1",
+      "size": 1246,
+      "sha256": "82acd960bde85be9df75b51f85b6b1b600807b801ab3838bb4528d77c3de9aec"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/douyin_worker_fixture.go",
+      "size": 656,
+      "sha256": "f1f53150cd27b2095d8fbde6460c1ced6f77223af7ff86508f2a578546b79a4c"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/render_conic_smoke.py",
+      "size": 2520,
+      "sha256": "8a6143cee183da18d32a20446789e88833e3e62bef4d1146012b997ae27360cf"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_conic.py",
+      "size": 12500,
+      "sha256": "6a7bc2b59d74a2391c96b515b3ffdf0854cfefaa8d6ddde8d5f90f37f617abff"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_focus_padding.py",
+      "size": 4992,
+      "sha256": "6cbd43313ae612a0d4143d0e2b920eabe7ba8d8f5adabca1199ef6e0a71cf17c"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_focus_transition.py",
+      "size": 7940,
+      "sha256": "22dcd2422d80cee6b304435ade30a530e3e2360c0e1a080c1245e7f274014438"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_geometry_circle.py",
+      "size": 10292,
+      "sha256": "70393225ef46acf1663e07350fa9dc8ea556ca3049e715611f1a3e7370f28acb"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_geometry_quadratic.py",
+      "size": 12764,
+      "sha256": "c4334cf432a47bdbe130c3942e473b65b95be39d3e01d104cc97b2057a7af553"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_geometry_single_decode.py",
+      "size": 9354,
+      "sha256": "1e51ff0e00a83195554a63a44d37cc6f9761b54bea1f9f3b298b43c1fc610655"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_highlight_masks.py",
+      "size": 3797,
+      "sha256": "0535159d4b3923d3d01d8bb4ad3017668e697c2f6d2c971d19ee9a2db9872703"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_isolation.py",
+      "size": 3420,
+      "sha256": "115167eddad57c2061df378c3ab519ff6bb736733486145e84fe83227cdca06c"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_long_lesson.py",
+      "size": 6171,
+      "sha256": "121235285e5b44ac74cdac6f179b3d30a2b21d16d7b9605b9aabe22ae6fc1ec1"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_on_quadratic.py",
+      "size": 6112,
+      "sha256": "ab8aa3414ffd2601132f4d39c24ea5934cc95fe908e0ab3928b2968234dd5987"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_provider_word_alignment.py",
+      "size": 10296,
+      "sha256": "55b62b5e68989546abfcf5763b65dbb94fd96af3a837bf27a50d60dc3ee681f7"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_rotation.py",
+      "size": 6947,
+      "sha256": "259c6c7715c882416ec32041cecca22c9f08bff1f9dac8edabf21d1ab474641f"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_text_readability.py",
+      "size": 2290,
+      "sha256": "c9c48d68d31ce9c8432b8290b517c19fac8f52a88f88e9425b6f3af283441258"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_text_route.py",
+      "size": 1295,
+      "sha256": "2d108f70a6cd1f02ae9a89c65d0d7f26e55e983d6bbf31fe7537a80fca9ce888"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_text_transform.py",
+      "size": 2623,
+      "sha256": "797e926d313b63b48148d4e0156d364dff7d9e89342f0213e60595b5127b232f"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_text_transform_state.py",
+      "size": 4043,
+      "sha256": "5693afb919a9d2eb677cab824f2b8ab4a18312b9e43f245b9aa95bbf16b40239"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_whisper_provenance.py",
+      "size": 9883,
+      "sha256": "d93e3479c8782d1708c91459831b11a5a2db3728c17d011e6f9db93e5b4bf428"
+    },
+    {
+      "path": "skills/manim-math-workbench/THIRD_PARTY_NOTICES.md",
+      "size": 3015,
+      "sha256": "8a9f6d77a733764a092bc9a7c89e200d48b4d080095ed2a7a8ab455e84bf7a5c"
+    },
+    {
+      "path": "skills/manim-math-workbench/VALIDATION.md",
+      "size": 2776,
+      "sha256": "c4e64f4a6b222ea6fcfa4b56a37e289c0650dfe517194ab5317f73db12761fbb"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/agents/openai.yaml",
+      "size": 307,
+      "sha256": "d97cfbc3bd84f9e0b8542c8ffb82fe8dc1543dcb4bb6698d6e1b1b7111d7b2e6"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/LICENSE",
+      "size": 1077,
+      "sha256": "e177f634f25f3c00dda5ef7da69e9d87359194ea0fa1f3c1a61697c96a0666ef"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/README.md",
+      "size": 4102,
+      "sha256": "137e7d999ccb0b14524ba7f0a872db629c607f5e90973adf6f63c1e913819422"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/requirements.txt",
+      "size": 19,
+      "sha256": "4b740437b23c4b7c59f0e9814281cbbaac0a2b137db1b4b752cc0e21d0d5a0cf"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/scripts/apply_logos.py",
+      "size": 6639,
+      "sha256": "e4d49ebfafe2b9c2a626426628c8d40da50f013ffa812edabff66a6bdc26f96e"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/scripts/create_demo.py",
+      "size": 1654,
+      "sha256": "7af6f85f6e7421c2dcc1ccf641cdd6c135569bbbc7413c0c628995f6606696b8"
+    },
+    {
+      "path": "skills/replace-logo-with-cutout/SKILL.md",
+      "size": 2767,
+      "sha256": "d8d419a5a75a5bf1a88642afa336a7c33cfafc22a3fc05e878e1e4c500607a9c"
+    },
+    {
+      "path": "tests/test_installer.py",
+      "size": 3716,
+      "sha256": "2dbef820df3adfd796317029e90ce3723f36452647f767e363eb9b60bb6a7a8c"
+    },
+    {
+      "path": "THIRD_PARTY.md",
+      "size": 1224,
+      "sha256": "f0be8b1cc68a0cb095d27c2dc511863d2fce5d6ac97b53434bd47543be45d82c"
+    },
+    {
+      "path": "tools/install_skills.py",
+      "size": 5516,
+      "sha256": "ffe42898bf866a00bf396b73eaae4d3f25515074837133ba19de8d7ad7e75690"
+    },
+    {
+      "path": "tools/validate_repository.py",
+      "size": 7663,
+      "sha256": "3ccb0c00ace5fb233fc09fc14c2b9e172eed6d530dba2b319989cd86afdea6ed"
+    },
+    {
+      "path": "VALIDATION.md",
+      "size": 2832,
+      "sha256": "ebab103fedad0f22e430104b91a5371ccd6d5022bd4710d3ca93c391a2dc508c"
+    }
+  ]
+}

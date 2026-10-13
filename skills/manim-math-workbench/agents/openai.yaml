@@ -1,0 +1,4 @@
+interface:
+  display_name: "数学视频工作台"
+  short_description: "Windows 本地数学视频分镜、音频对齐与真实渲染验收"
+  default_prompt: "请使用 $manim-math-workbench，自动检查并准备本机环境，补齐缺失的题目、逐字稿和原音频，由 Codex 规划黑底黄标题、无底部字幕的对象动画，真实渲染验收后交付成片路径与可恢复任务，并默认随片交付黑板风横竖双封面。"

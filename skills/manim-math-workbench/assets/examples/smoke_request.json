@@ -1,0 +1,6 @@
+{
+  "title": "Offline smoke test",
+  "problem": "A square has one unit.",
+  "narration": "Given one. Show the square. Solve it. The answer is one.",
+  "audio_path": "smoke_audio.wav"
+}

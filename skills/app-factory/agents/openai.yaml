@@ -1,0 +1,4 @@
+interface:
+  display_name: "App Factory"
+  short_description: "编排 App 从 MVP、产品规划和架构设计到实现、验证、发布与维护的完整流程"
+  default_prompt: "请使用 $app-factory 推进我的 App 项目，先识别当前阶段并明确本次交付和 MVP 范围。"

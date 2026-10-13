@@ -1,0 +1,4 @@
+interface:
+  display_name: "Logo 去白底替换"
+  short_description: "使用原始 Logo 像素去白底并合成海报，保留透明度并输出新 PNG 文件"
+  default_prompt: "Use $replace-logo-with-cutout to replace logos in my poster using the supplied original logo pixels and save a new PNG."
