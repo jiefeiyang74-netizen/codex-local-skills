@@ -147,7 +147,7 @@ runtime快照curved_regions记录世界坐标圆心、弧端点、半径及area�
 
 `coordinate_axes.label_offsets` 是从 `origin` 或 `x:<数值>` / `y:<数值>` 到 `[dx,dy]` 的映射。轴键须对应同对象已声明的 `x_ticks` / `y_ticks`；数值采用普通十进制 canonical 写法：整数不带 `.0`，不带加号、前导零、尾随小数零或指数形式，负零归为 `0`。不能用显示文本的三位有效数字舍入值代替真实刻度值。零刻度仍不单独显示数字，原点 O 使用 `origin`。
 
-每个 offset 是相对于真实刻度点/原点的完整二维画面单位偏移（覆盖默认值，不是叠加量），两分量必须有限且绝对值≤1.5，未知 key 拒绝。省略映射或某 key 时保留原默认：x 数字 `[0,-0.27]`、y 数字 `[-0.3,0]`、O `[-0.23,-0.25]`。不改变坐标轴、刻度位置、网格、函数或世界坐标；数字黑底与层级保留。标签在图窗外仍不凭空生成。设计时避开函数线、点名及其他标签，真实预览检查文字与背景框，不能通过删除全部背景或移动数学刻度来掩盖遮挡。
+每个 offset 是相对于真实刻度点/原点的完整二维画面单位偏移（覆盖默认值，不是叠加量），两分量必须有限且绝对值≤1.5，未知 key 拒绝。省略映射或某 key 时保留原默认：x 数字 `[0,-0.27]`、y 数字 `[-0.3,0]`、O `[-0.23,-0.25]`。不改变坐标轴、刻度位置、网格、函数或世界坐标；数字遮罩与层级保留，遮罩跟随所选主题底色。标签在图窗外仍不凭空生成。设计时避开函数线、点名及其他标签，真实预览检查文字与背景框，不能通过删除全部背景或移动数学刻度来掩盖遮挡。
 
 
 ## Derived points on quadratics
@@ -260,3 +260,10 @@ capability evidence, not production audio/visual acceptance.
 ## geometry-1.8.1 Whisper 来源与动作审计
 
 真实 Whisper alignment 必须携带原 full-json 文件路径与SHA，逐token验证原raw对象/文本/时间与null；仅source字符串不能通过。派生alignment需provenance_sources与token.origin，逐采样验证PCM来源和整数frameoffset，原对齐与raw文件保留。动作audit必须绑定源稿范围和原文；trigger_evidence提供真实cue的source/token配对，motion_window单独声明同句或紧接解释句的真实证据窗。后文不能借作前文启动词，review字符串不能绕过同cue前序动作与有界窗口。synthetic_fixture只供单测显式参数，生产runner不开启。合法旧Whisper缓存有原raw_evidence可复用，旧动作audit需补真实source/trigger/window，不复跑未变ASR。
+
+
+## 受约束正比例缩放点（point.derive.scale，geometry-1.9.0）
+
+`derive={"type":"scale","source":"P","center":"O","factor":{"parameter":"s","scale":1,"offset":0}}` 严格只接受 type/source/center/factor。factor 也可为固定有限数，解析后须满足 `0<factor<=10000`；拒绝布尔、非有限值、未知字段及表达式。位置每帧为 `O+factor*(P-O)`，source/center 均须引用点，允许二者相同但禁止依赖循环。固定因子仍跟随源点和中心运动。
+
+一个 set_parameter 可同时驱动多个 scale 点和动态 sector 的 radius；圆盘用 sweep_angle=360。先用 rotate 派生圆心/点，再以其为 scale.source，实现绕中心旋转后整体伸缩；半径同步乘同一因子，不以位移模拟缩放。constrain 可建立该派生关系；派生点禁止直接 move/move_on_circle，依赖中心的圆周运动禁用规则不变。参数初末态均检查，仿射因子的线性中间态仍在正有界区间；source/center 的依赖逐帧重算，边和标签随点更新。通用例子见 examples/scale_points.json；无声能力样例不证明语音同步，不迁移历史输出。

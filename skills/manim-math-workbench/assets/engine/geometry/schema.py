@@ -5,13 +5,16 @@ import re
 from decimal import Decimal
 
 SCHEMA_VERSION = "geometry-1.0"
-CAPABILITY_VERSION = "geometry-1.8.1"
+CAPABILITY_VERSION = "geometry-1.9.7"
+PANEL_SHADOW_OFFSET = (.06, -.06)
+PANEL_OUTLINE_SHADOW_OFFSET = (.0375, -.0375)
 PRODUCTION_PROFILES = {
     "standard": {"max_duration": 7200, "max_chapters": 100, "max_total_actions": 3000},
     "long_lesson": {"max_duration": 14400, "max_chapters": 512, "max_total_actions": 12000},
 }
 
 OBJECT_FIELDS = {
+    'panel': ('id type rect', 'color fill_color fill_opacity stroke_width shadow shadow_style accent'),
     'cylinder_net': ('id type radius height unfold', 'position display_scale color stroke_width fill_opacity'),
     'cone_net': ('id type radius slant unfold', 'position display_scale color stroke_width fill_opacity'),
     'conic': ('id type kind center', 'a b p branch color stroke_width dashed tolerance'),
@@ -23,14 +26,14 @@ OBJECT_FIELDS = {
     'quadratic_feature': ('id type curve kind', 'x color label show_label font_size label_offset'),
     'number_line': ('id type variable range start end', 'ticks color font_size'),
     'interval': ('id type axis left right left_closed right_closed', 'lane label empty_label color stroke_width'),
-    'point': ('id type', 'xy derive label color label_offset font_size'),
+    'point': ('id type', 'xy derive label color label_offset font_size typography label_mask'),
     'circle': ('id type center radius', 'color stroke_width dashed fill_opacity'),
     'line': ('id type a b', 'kind color stroke_width dashed arrow'),
     'polygon': ('id type points', 'color fill_opacity'),
     'ticks': ('id type segment', 'count color'),
     'right_angle': ('id type vertex arm1 arm2', 'color size'),
     'angle': ('id type vertex arm1 arm2', 'label color radius'),
-    'text': ('id type text position', 'font_size color max_width formula_group'),
+    'text': ('id type text position', 'font_size color max_width formula_group typography'),
 }
 ACTION_FIELDS = {
     'text_transform': ('type at duration items', ''),
@@ -41,7 +44,7 @@ ACTION_FIELDS = {
     'move_on_circle': ('at duration type point circle angle', ''),
     'reflect_copy': ('at duration type source target axis', ''),
     'translate_copy': ('at duration type sources targets vector', 'style'),
-    'focus': ('at duration type ids', ''), 'highlight': ('at duration type ids', ''),
+    'focus': ('at duration type ids', ''), 'highlight': ('at duration type ids', 'style'),
     'formula': ('at duration type lines', 'accent'), 'hold': ('at duration type', ''),
     'constrain': ('at duration type point derive', ''),
 }
@@ -104,6 +107,34 @@ def production_limits(spec):
     require(type(profile) is str and profile in PRODUCTION_PROFILES, 'unknown production_profile')
     return dict(PRODUCTION_PROFILES[profile])
 
+
+def validate_layout_style(spec, selected_style):
+    if 'paper_palette' in spec:
+        require(spec['paper_palette'] == 'reference_yellow', 'invalid paper_palette')
+        require(selected_style == 'paper_guided', 'paper_palette requires paper_guided')
+    for chapter in spec.get('chapters', []):
+        if chapter.get('proof_layout', 'single') == 'steps':
+            require(selected_style == 'paper_guided', 'proof_layout steps requires paper_guided')
+        if any(o.get('typography') == 'heavy' for o in chapter.get('objects', [])):
+            require(selected_style == 'paper_guided', 'heavy typography requires paper_guided')
+
+
+def panel_stroke_padding(obj):
+    return .01 * max(obj.get('stroke_width', 1), 3 if 'accent' in obj else 0,
+                     1 if obj.get('shadow_style') == 'outline' else 0)
+
+
+def panel_shadow_offset(obj):
+    return PANEL_OUTLINE_SHADOW_OFFSET if obj.get('shadow_style', 'soft') == 'outline' else PANEL_SHADOW_OFFSET
+
+
+def panel_bounds(obj):
+    cx, cy, width, height = obj['rect']
+    dx, dy = panel_shadow_offset(obj) if obj.get('shadow', False) else (0, 0)
+    pad = panel_stroke_padding(obj)
+    return [cx-width/2-pad, cx+width/2+dx+pad,
+            cy-height/2+dy-pad, cy+height/2+pad]
+
 def validate_production_budget(spec):
     limits = production_limits(spec)
     duration, chapters = spec.get('audio_duration'), spec.get('chapters')
@@ -115,7 +146,8 @@ def validate_production_budget(spec):
 
 def validate_spec(raw, *, run_math=True):
     _finite_tree(raw)
-    fields(raw, 'schema_version title audio_duration narration chapters', 'canvas heading_mode production_profile')
+    fields(raw, 'schema_version title audio_duration narration chapters', 'canvas heading_mode production_profile paper_palette')
+    if 'paper_palette' in raw: require(raw['paper_palette'] == 'reference_yellow', 'invalid paper_palette')
     limits = validate_production_budget(raw)
     require(raw.get('heading_mode', 'standard') in ('standard', 'chapter'), 'invalid heading_mode')
     if 'canvas' in raw:
@@ -134,7 +166,10 @@ def validate_spec(raw, *, run_math=True):
     require(isinstance(chapters, list) and 0 < len(chapters) <= limits['max_chapters'], 'chapter budget')
     chapter_ids, previous_end, total_actions = set(), 0, 0
     for ci, c in enumerate(chapters):
-        fields(c, 'id title start end world_bounds problem objects actions checks', 'plot_rect formula_rect parameters')
+        fields(c, 'id title start end world_bounds problem objects actions checks', 'plot_rect formula_rect parameters presentation proof_layout')
+        require(c.get('presentation', 'standard') in ('standard', 'freeform'), 'invalid chapter presentation')
+        require(c.get('proof_layout', 'single') in ('single', 'steps'), 'invalid chapter proof_layout')
+        steps = c.get('proof_layout', 'single') == 'steps'
         parameters = c.get('parameters', {})
         require(isinstance(parameters,dict) and len(parameters) <= 16, 'parameter budget')
         for key,value in parameters.items():
@@ -159,7 +194,7 @@ def validate_spec(raw, *, run_math=True):
         require(isinstance(b, list) and len(b) == 4 and all(number(v) and abs(v) <= 10000 for v in b) and b[0] < b[1] and b[2] < b[3], 'invalid world_bounds')
         require(isinstance(c['problem'], list) and len(c['problem']) <= 2, 'problem line budget')
         for s in c['problem']: short(s, 52)
-        require(isinstance(c['objects'], list) and len(c['objects']) <= 120, 'object budget')
+        require(isinstance(c['objects'], list) and len(c['objects']) <= (144 if steps else 120), 'object budget')
         objects = {}
         for o in c['objects']:
             require(isinstance(o, dict) and o.get('type') in OBJECT_FIELDS, 'unknown object type')
@@ -167,7 +202,20 @@ def validate_spec(raw, *, run_math=True):
             oid = o['id']
             require(isinstance(oid, str) and re.fullmatch(r'[A-Za-z][A-Za-z0-9_]{0,63}', oid) and oid not in objects, 'invalid/duplicate object id')
             objects[oid] = o
+            if 'typography' in o:
+                require(o['typography'] in ('body', 'math', 'serif', 'heavy'), 'invalid typography')
+                require(o['typography'] != 'heavy' or o['type'] == 'text', 'heavy typography is for text objects only')
+            if 'label_mask' in o: require(type(o['label_mask']) is bool, 'label_mask must be boolean')
             if 'color' in o: require(isinstance(o['color'], str) and re.fullmatch(r'#[0-9a-fA-F]{6}', o['color']), 'invalid color')
+            if o['type'] == 'panel':
+                rect = o['rect']
+                require(isinstance(rect, list) and len(rect) == 4 and all(number(x) for x in rect)
+                        and rect[2] > 0 and rect[3] > 0, 'invalid panel rect')
+                for key in ('fill_color', 'accent'):
+                    if key in o: require(isinstance(o[key], str) and re.fullmatch(r'#[0-9a-fA-F]{6}', o[key]), f'invalid panel {key}')
+                if 'shadow' in o: require(type(o['shadow']) is bool, 'panel shadow must be boolean')
+                if 'shadow_style' in o: require(o['shadow_style'] in ('soft','outline'), 'invalid shadow_style')
+                require(o.get('shadow_style') != 'outline' or o.get('shadow') is True, 'outline requires shadow:true')
             if 'label' in o: short(o['label'], 20)
             if o['type'] == 'coordinate_axes':
                 for name, lo, hi in [('x_ticks',b[0],b[1]), ('y_ticks',b[2],b[3])]:
@@ -208,11 +256,16 @@ def validate_spec(raw, *, run_math=True):
                 except ValueError as exc: raise GeometryValidationError(str(exc)) from exc
             for key in ('xy', 'position', 'label_offset'):
                 if key in o: vector(o[key])
-            for key, lo, hi in [('stroke_width', .1, 12), ('fill_opacity', 0, 1), ('size', .01, 2), ('font_size', 12, 48), ('max_width', .2, 10)]:
+            for key, lo, hi in [('stroke_width', .1, 12), ('fill_opacity', 0, 1), ('size', .01, 2), ('font_size', 12, 80 if o['type'] == 'text' else 48), ('max_width', .2, 10)]:
                 if key in o: require(number(o[key]) and lo <= o[key] <= hi, f'invalid {key}')
             if 'radius' in o and o['type'] not in ('sector','cylinder_net','cone_net'):
                 require(number(o['radius']) and (0 < o['radius'] <= 10000 if o['type'] in ('circle','sector','circular_segment') else .01 <= o['radius'] <= 5), 'invalid radius')
             if 'dashed' in o: require(type(o['dashed']) is bool, 'dashed must be boolean')
+            if o['type'] == 'panel':
+                bounds = panel_bounds(o)
+                require(bounds[0] >= -frame_width/2+.35 and bounds[1] <= frame_width/2-.35
+                        and bounds[2] >= -frame_height/2+.3 and bounds[3] <= frame_height/2-.3,
+                        'panel including shadow/stroke outside canvas safe budget')
             if 'count' in o: require(type(o['count']) is int and 1 <= o['count'] <= 4, 'ticks count')
             if o['type']=='line' and 'kind' in o: require(o['kind'] in ('segment', 'line', 'ray'), 'line kind')
             if o['type'] in ('sector','circular_segment'):
@@ -240,8 +293,8 @@ def validate_spec(raw, *, run_math=True):
                 require(('xy' in o) != ('derive' in o), 'point needs exactly xy or derive')
                 if 'derive' in o:
                     d = o['derive']; dt = d.get('type') if isinstance(d, dict) else None
-                    require(dt in ('reflect', 'project', 'translate', 'intersect', 'on_reciprocal', 'on_quadratic', 'rotate', 'on_conic', 'conic_tangent'), 'unknown derivation')
-                    fields(d, {'reflect':'type source axis', 'project':'type source line', 'translate':'type source vector', 'intersect':'type lines', 'on_reciprocal':'type curve x', 'on_quadratic':'type curve x', 'rotate':'type source center angle', 'on_conic':'type curve t', 'conic_tangent':'type source scale'}[dt], 'branch' if dt == 'on_conic' else '')
+                    require(dt in ('reflect', 'project', 'translate', 'intersect', 'on_reciprocal', 'on_quadratic', 'rotate', 'scale', 'on_conic', 'conic_tangent'), 'unknown derivation')
+                    fields(d, {'reflect':'type source axis', 'project':'type source line', 'translate':'type source vector', 'intersect':'type lines', 'on_reciprocal':'type curve x', 'on_quadratic':'type curve x', 'scale':'type source center factor', 'rotate':'type source center angle', 'on_conic':'type curve t', 'conic_tangent':'type source scale'}[dt], 'branch' if dt == 'on_conic' else '')
                     if dt == 'on_conic':
                         ref(d['curve']); require(objects[d['curve']]['type']=='conic', 'on_conic requires conic'); deps.append(d['curve'])
                     elif dt == 'conic_tangent':
@@ -251,11 +304,11 @@ def validate_spec(raw, *, run_math=True):
                         ref(d['curve']); require(objects[d['curve']]['type']=='reciprocal', 'on_reciprocal requires reciprocal'); deps.append(d['curve'])
                     elif dt == 'on_quadratic':
                         ref(d['curve']); require(objects[d['curve']]['type']=='quadratic', 'on_quadratic requires quadratic'); deps.append(d['curve'])
-                    elif dt == 'rotate':
+                    elif dt in ('rotate', 'scale'):
                         ref(d['source'], True); ref(d['center'], True)
                         deps.extend([d['source'], d['center']])
-                        from .math2d import rotation_angle
-                        try: rotation_angle(d, parameters)
+                        from .math2d import rotation_angle, scale_factor
+                        try: (rotation_angle if dt == 'rotate' else scale_factor)(d, parameters)
                         except ValueError as exc: raise GeometryValidationError(str(exc)) from exc
                     elif dt == 'intersect':
                         require(isinstance(d['lines'], list) and len(d['lines']) == 2, 'intersection lines')
@@ -300,7 +353,7 @@ def validate_spec(raw, *, run_math=True):
         except ValueError as exc: raise GeometryValidationError(str(exc)) from exc
         require(isinstance(c['actions'], list) and len(c['actions']) <= 500, 'action budget')
         total_actions += len(c['actions'])
-        if c['actions']:
+        if c['actions'] and c.get('presentation') != 'freeform' and not (ci and chapters[ci-1].get('presentation') == 'freeform'):
             require(c['actions'][0].get('at', -1) >= c['start'] + .5, 'reserve at least .5s for chapter heading transition')
         visible, end = set(), c['start']
         state_objects = copy.deepcopy(c['objects'])
@@ -309,6 +362,13 @@ def validate_spec(raw, *, run_math=True):
         for ai, a in enumerate(c['actions']):
             require(isinstance(a, dict) and a.get('type') in ACTION_FIELDS, 'unknown action')
             fields(a, *ACTION_FIELDS[a['type']]); t = a['type']
+            panel_ids = {key for key, obj in objects.items() if obj['type'] == 'panel'}
+            for key in ('ids', 'sources', 'targets', 'source', 'target'):
+                value = a.get(key, [])
+                values = value if isinstance(value, list) else [value]
+                if any(isinstance(v, str) and v in panel_ids for v in values):
+                    require(t in ('reveal', 'hide') and a.get('style', 'fade') == 'fade',
+                            'panel supports only reveal fade and hide')
             require(number(a['at']) and number(a['duration']) and a['duration'] > 0 and a['at'] >= end - 1e-8 and a['at'] + a['duration'] <= min(c['end'], duration) + 1e-8, f"{c['id']}.actions[{ai}] {t}: action overlap/outside audio or chapter; at={a['at']}, duration={a['duration']}, previous_end={end}, chapter_end={c['end']}")
             end = a['at'] + a['duration']
             if 'ids' in a:
@@ -319,7 +379,7 @@ def validate_spec(raw, *, run_math=True):
                     require(set(a['ids']) <= visible, 'action references hidden object')
                     if t == 'hide': visible.difference_update(a['ids'])
             if 'style' in a:
-                require(a['style'] in (('continuous',) if t == 'translate_copy' else ('draw', 'fade')), 'unknown action style')
+                require(a['style'] in (('continuous',) if t == 'translate_copy' else ('emphasis',) if t == 'highlight' else ('draw', 'fade')), 'unknown action style')
             if t == 'set_parameter':
                 require(isinstance(a['parameter'],str) and a['parameter'] in parameters and number(a['value']) and abs(a['value'])<=10000, 'invalid parameter update')
                 updated = dict(parameters); updated[a['parameter']]=a['value']
@@ -328,8 +388,9 @@ def validate_spec(raw, *, run_math=True):
                     validate_conic_transition(state_objects, parameters, updated)
                     validate_quadratic_transition(state_objects, parameters, updated)
                     validate_reciprocal_transition(state_objects, parameters, updated)
-                    from .math2d import validate_rotation_parameters
+                    from .math2d import validate_rotation_parameters, validate_scale_parameters
                     validate_rotation_parameters(state_objects, updated)
+                    validate_scale_parameters(state_objects, updated)
                     for obj in state_objects:
                         if obj['type']=='reciprocal': reciprocal_segments(obj, updated, b)
                 except ValueError as exc: raise GeometryValidationError(str(exc)) from exc
@@ -421,6 +482,8 @@ def validate_spec(raw, *, run_math=True):
                     resolve_points(state_objects, overrides, parameters)
             if t == 'reflect_copy':
                 ref(a['source'], True); ref(a['target'], True); refs(a['axis'], 2)
+                source, target = objects[a['source']], objects[a['target']]
+                require(source.get('typography','body') == target.get('typography','body') and source.get('label_mask',True) == target.get('label_mask',True), 'point copy typography/mask mismatch')
                 require(a['source'] in visible and a['target'] not in visible and a['source'] != a['target'], 'reflect lifecycle')
                 require(objects[a['target']].get('derive') == {'type':'reflect', 'source':a['source'], 'axis':a['axis']}, 'reflect target definition mismatch')
                 visible.add(a['target'])
@@ -428,6 +491,9 @@ def validate_spec(raw, *, run_math=True):
                 refs(a['sources'], point=False); refs(a['targets'], point=False); vector(a['vector'])
                 require(len(a['sources']) == len(a['targets']) and not set(a['sources']).intersection(a['targets']) and set(a['sources']) <= visible, 'translate lifecycle/count')
                 for s, target in zip(a['sources'], a['targets']): require(objects[s]['type'] == objects[target]['type'], 'translate types differ')
+                for s, target in zip(a['sources'], a['targets']):
+                    if objects[s]['type'] == 'point':
+                        require(objects[s].get('typography','body') == objects[target].get('typography','body') and objects[s].get('label_mask',True) == objects[target].get('label_mask',True), 'point copy typography/mask mismatch')
                 if a.get('style') == 'continuous':
                     require(not set(a['targets']).intersection(visible), 'continuous copy target already visible')
                     rect = c.get('plot_rect', [-2.45, -.35, 9.5, 5.8] if frame_width >= frame_height else [0, .35, 10.4, 6.9])
@@ -437,6 +503,7 @@ def validate_spec(raw, *, run_math=True):
                         require(source['type'] == target['type'] == 'text', 'continuous copy requires text')
                         require(source['text'] == target['text'] and source.get('font_size',28) == target.get('font_size',28), 'continuous copy content/font_size mismatch')
                         require(source.get('color','#FFFFFF').upper() == target.get('color','#FFFFFF').upper() and source.get('max_width',9) == target.get('max_width',9), 'continuous copy appearance mismatch')
+                        require(source.get('typography','body') == target.get('typography','body'), 'continuous copy typography mismatch')
                         require(all(abs(target['position'][j]-source['position'][j]-a['vector'][j]*scale) <= 1e-8 for j in (0,1)), 'continuous copy vector mismatch')
                 visible.update(a['targets'])
             if t == 'formula':
@@ -506,11 +573,18 @@ def validate_spec(raw, *, run_math=True):
     return copy.deepcopy(raw)
 
 def contract():
-    return {'schema_version': SCHEMA_VERSION, 'capability_version': CAPABILITY_VERSION, 'production_profiles': {key: dict(value) for key, value in PRODUCTION_PROFILES.items()}, 'production_profile_default': 'standard', 'render_timeout_seconds': 43200, 'extensions': ['long_lesson', 'dynamic_sector', 'cylinder_net', 'cone_net', 'conic', 'on_conic', 'conic_tangent', 'segment_arrow', 'text_transform', 'formula_group', 'continuous_text_copy', 'coordinate_axes_label_offsets', 'point_on_quadratic', 'point_rotate', 'chapter_heading'], 'text_transform_rules': {'items': '1..48 unique visible text IDs; each requires id and finite scene-coordinate position; optional text <=64 chars; optional via is a finite safe-canvas point reached halfway through the same play', 'semantics': 'one play; preserve ID/style/group; unchanged text moves without recreation; changed text fades through zero without glyph morphing; repeat for further movement, then translate_copy/hide; point move unchanged'}, 'text_budget': {'ungrouped_plus_groups': 6, 'visible_per_group': 24, 'visible_total': 48, 'visible_characters': 200}, 'object_fields': OBJECT_FIELDS, 'action_fields': ACTION_FIELDS,
+    return {'schema_version': SCHEMA_VERSION, 'capability_version': CAPABILITY_VERSION, 'production_profiles': {key: dict(value) for key, value in PRODUCTION_PROFILES.items()}, 'production_profile_default': 'standard', 'render_timeout_seconds': 43200, 'extensions': ['long_lesson', 'dynamic_sector', 'cylinder_net', 'cone_net', 'conic', 'on_conic', 'conic_tangent', 'segment_arrow', 'text_transform', 'formula_group', 'continuous_text_copy', 'coordinate_axes_label_offsets', 'point_on_quadratic', 'point_rotate', 'point_scale', 'chapter_heading'], 'text_transform_rules': {'items': '1..48 unique visible text IDs; each requires id and finite scene-coordinate position; optional text <=64 chars; optional via is a finite safe-canvas point reached halfway through the same play', 'semantics': 'one play; preserve ID/style/group; unchanged text moves without recreation; changed text fades through zero without glyph morphing; repeat for further movement, then translate_copy/hide; point move unchanged'}, 'text_budget': {'ungrouped_plus_groups': 6, 'visible_per_group': 24, 'visible_total': 48, 'visible_characters': 200}, 'object_fields': OBJECT_FIELDS, 'action_fields': ACTION_FIELDS,
             'coordinate_axes_label_offsets': {'keys': 'origin or canonical x:<tick>/y:<tick> in declared ticks', 'units': 'screen units relative to true tick/origin, replaces default offset', 'max_abs_component': 1.5, 'defaults_unchanged': True, 'numeric_key_rule': 'plain decimal, no redundant zeros/sign/exponent; zero uses origin label'},
-            'heading_mode': {'values':['standard','chapter'], 'default':'standard', 'chapter':'single warm-yellow current chapter title; no global heading or duplicate subtitle'},
+            'heading_mode': {'values':['standard','chapter'], 'default':'standard', 'chapter':'single current chapter title in selected style (classic: warm-yellow); no global heading or duplicate subtitle'},
             'alignment_sources': {'default':'local_whisper', 'optional':['qwen_forced_aligner'], 'qwen_contract_version':1, 'qwen_route':'explicit alignment_path with timing_source=qwen_forced_aligner; immutable known-text chunk inference, direct acoustic envelopes, exact PCM offsets and source ranges', 'runtime_dependency_policy':'optional external aligner; default installation and Whisper fallback unchanged', 'details':'geometry/qwen_alignment.md'},
-            'chapter_optional_fields': ['plot_rect','formula_rect','parameters'],
+            'chapter_optional_fields': ['plot_rect','formula_rect','parameters','presentation','proof_layout'],
+            'proof_layout': {'default':'single','values':['single','steps'],'steps':'paper_guided only; standard retains heading/problem, freeform suppresses all automatic heading/card/problem; both keep clock/plot_rect/formula_rect; classic rejected by compiler/runner/runtime', 'object_budget':{'single':120,'steps':144}, 'other_budgets':'unchanged'},
+            'paper_palette': {'optional':'reference_yellow','scope':'paper_guided only; background #FAF4D0 for all chapters; omitted preserves old style; no other color changes'},
+            'typography': {'objects':['text','point'],'default':'body','values':['body','math','serif','heavy'],'body':'unchanged Microsoft YaHei','heavy':'paper_guided text only: Microsoft YaHei BOLD at any font_size (kinetic headline type); opt-in, other typographies unchanged','math':'Cambria italic; math symbols use Cambria Math regular; Chinese/fullwidth text uses SimSun regular','serif':'SimSun regular, mathematical symbols use Cambria Math regular','continuity':'text_transform preserves typography; continuous text copy and point copy require matching typography; point copy also requires matching label_mask; no arbitrary font or transform style field','formula_action':'unchanged; use declared text for styled formula rows'},
+            'label_mask': {'object':'point','default':True,'false':'no label background rectangle; keep label z-index and explicit offset planning'},
+            'panel_shadow_style': {'default':'soft','values':['soft','outline'],'soft':'unchanged exposed strips, offset [0.06,-0.06]','outline':{'requires':'shadow:true','offset':list(PANEL_OUTLINE_SHADOW_OFFSET),'color':'#7C7965','stroke_width':1,'fill_opacity':0},'bounds':'use selected offset plus conservative stroke padding; no extra object budget'},
+            'panel': {'coordinates':'scene rect [cx,cy,w,h], positive finite sizes; full bounds including shadow and conservative stroke padding stay inside canvas safe area', 'defaults':{'color':'#D4D7CF','fill_color':'#FFFFFF','fill_opacity':1,'stroke_width':1,'shadow':False}, 'shadow':{'offset':list(PANEL_SHADOW_OFFSET),'color':'#263633','opacity':.1,'coverage':'only exposed parts outside the face; transparent panels do not tint their interior'}, 'accent':'optional hex color; bottom edge only, width max(3,stroke_width)', 'layers':'shadow below panel; panel behind geometry and text, independent of reveal order; no text content', 'actions':['reveal fade','hide'], 'text':'separate text objects retain existing budgets and text_transform; no new arbitrary code or z_index field'},
+            'presentation': {'default':'standard','values':['standard','freeform'],'freeform':'No automatic heading or paper card; declared primitives own composition, with no automatic shadow. Entry/exit fade preserves live scene painter order and shares the first explicit action duration (including hold). Without actions, it starts at the chapter boundary for up to 0.5s within that chapter, frame-quantized; with no available frame, cleanup is immediate. Action clock remains absolute. Pure standard transitions are unchanged.'},
             'interval_scalar': 'finite number | -inf/+inf on correct open side | {parameter,scale,offset}; no eval',
             'interval_rules': ['Empty when left>right or equal unless both closed','Same-axis connected union only','Finite off-viewport endpoints have no false caps'],
             'curved_region_rules': ['sector/circular_segment: center is a point reference; 0<radius<=10000', 'sector radius/start_angle/sweep_angle: finite numeric or exact {parameter,scale,offset}; degrees, +x start, CCW sweep in [0,360]; 0 is empty, 360 is disk; set_parameter updates arc and endpoints', 'circular_segment remains static numeric with 0<sweep_angle<360', 'segment closes the swept arc with a chord; sweep>180 selects the major segment', 'move the center point to translate; hide removes visibility; no Boolean subtraction'],
@@ -520,12 +594,14 @@ def contract():
             'reciprocal_rules': ['y=k/x; nonzero finite k; existing affine scalars only', 'point derive={type:on_reciprocal,curve:id,x:scalar}; projections/lines/polygons follow', 'set_parameter keeps k and x signs; move requires a free point', 'separate cubic branches clipped to world_bounds; tolerance is max vertical error in world units, default .001, range 1e-8..05; budget 8192 segments'],
             'rotation_point_example': 'examples/rotation_points.json',
             'conic_rules': {'kinds': ['ellipse','hyperbola','parabola'], 'center': 'fixed finite xy; abs<=10000', 'shape': 'fixed a,b in [1e-6,10000]; nonzero signed p with same magnitude bounds; y^2=4px', 'hyperbola_branch': 'required positive_x|negative_x|both; point branch required positive_x|negative_x and must be present', 'parameterization': 'ellipse=(a cos t,b sin t); hyperbola=(sign*a cosh t,b sinh t); parabola=(p*t*t,2*p*t); plus center', 't_bounds': 'hyperbola +/-12; others +/-10000; affine scalar allowed', 'rendering': 'analytic viewport clipping, separate paths, bounded chord error tolerance default .001 [1e-8,.05], 8192 segments max', 'rotation': False}, 'arrow_rules': 'boolean on segment only; zero length is empty; clipped endpoint gets a visible direction tip',
-            'point_derivations': {'on_conic': {'required': ['type','curve','t'], 'hyperbola_required': ['branch'], 'additional_fields': False}, 'conic_tangent': {'required': ['type','source','scale'], 'additional_fields': False, 'source': 'on_conic point id', 'scale': 'finite number or exact affine scalar, abs<=10000', 'position': 'P+scale*P_derivative(t)'}, 'rotate': {'required': ['type', 'source', 'center', 'angle'], 'additional_fields': False, 'source': 'point id', 'center': 'point id; may equal source without a dependency cycle', 'angle': 'finite degrees or exact {parameter,scale,offset}; positive CCW, negative CW', 'position': 'center + R(angle)*(source-center)', 'animation': 'set_parameter; dependencies recomputed each frame, labels and edges follow', 'parameter_range': [-10000, 10000]}, 'on_quadratic': {'required': ['type', 'curve', 'x'], 'additional_fields': False, 'curve': 'quadratic id', 'x': 'finite number or exact {parameter,scale,offset}', 'position': '[x, a*(x-h)^2+k]', 'parameter_range': [-10000, 10000], 'viewport_is_not_domain': True}},
+            'point_scale_example': 'examples/scale_points.json',
+            'point_derivations': {'scale': {'required': ['type','source','center','factor'], 'additional_fields': False, 'source': 'point id', 'center': 'point id; source may equal center; no dependency cycles', 'factor': 'finite number or exact {parameter,scale,offset}; resolved 0<factor<=10000; no eval', 'position': 'center + factor*(source-center)', 'animation': 'set_parameter; source and center recomputed each frame; shared parameter can drive sector radius; derived points cannot move directly', 'parameter_range': [-10000,10000]}, 'on_conic': {'required': ['type','curve','t'], 'hyperbola_required': ['branch'], 'additional_fields': False}, 'conic_tangent': {'required': ['type','source','scale'], 'additional_fields': False, 'source': 'on_conic point id', 'scale': 'finite number or exact affine scalar, abs<=10000', 'position': 'P+scale*P_derivative(t)'}, 'rotate': {'required': ['type', 'source', 'center', 'angle'], 'additional_fields': False, 'source': 'point id', 'center': 'point id; may equal source without a dependency cycle', 'angle': 'finite degrees or exact {parameter,scale,offset}; positive CCW, negative CW', 'position': 'center + R(angle)*(source-center)', 'animation': 'set_parameter; dependencies recomputed each frame, labels and edges follow', 'parameter_range': [-10000, 10000]}, 'on_quadratic': {'required': ['type', 'curve', 'x'], 'additional_fields': False, 'curve': 'quadratic id', 'x': 'finite number or exact {parameter,scale,offset}', 'position': '[x, a*(x-h)^2+k]', 'parameter_range': [-10000, 10000], 'viewport_is_not_domain': True}},
             'quadratic_point_example': 'examples/quadratic_derived_points.json',
             'quadratic_scalar': 'finite number | {parameter,scale,offset}; no infinity and no eval',
             'quadratic_rules': ['y=a(x-h)^2+k; a is nonzero throughout parameter actions', 'Roots are distinct real roots; tangency has one root', 'Exact cubic Bezier groups clipped to world_bounds; disconnected arms stay separate', 'Features are direct render objects and cannot be used as point references; use point.derive on_quadratic for downstream geometry', 'quadratic_point checks point/vertex/y_intercept features; axis has no label'],
             'check_fields': CHECK_FIELDS, 'reference': 'references/geometry.md',
             'highlight_rules': 'Color-only foreground pulse (scale=1); dots, glyphs and line coordinates stay fixed; text background masks retain geometry and style',
+            'highlight_emphasis': {'style': 'emphasis', 'semantics': 'Opt-in single ids group pulse; visible strokes peak at 1.45x width, paper color #244F46, classic color #FFD166; original color/width/opacity restored at end; masks, coordinates and z-index unchanged; no hidden objects revealed', 'default': 'Omit style for the unchanged legacy color-only pulse', 'scope': 'Temporary emphasis only; no persistent dimming or layer reordering; existing sector/reveal(draw)/rotate/set_parameter supply area fill, drawing and motion'},
             'quality': {'preview': 'long edge <=720, no upscale, even dimensions, aspect preserved (rounding for unusual ratios), 30fps', 'final': 'canvas at 60fps'},
             'director_prompt': 'assets/engine/prompts/geometry_director.md',
             'reciprocal_example': 'examples/reciprocal_motion.json',

@@ -16,6 +16,7 @@ class Harness:
     perform = GeometryScene.perform
 
     def __init__(self, labels, positions, at):
+        self.paper = False
         self.text_cache = {}
         self.defs = {f'e{i}': dict(type='text', text=t, font_size=32, position=[x, 0])
                      for i, (t, x) in enumerate(zip(labels, positions))}

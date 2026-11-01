@@ -8,7 +8,7 @@ import subprocess
 import re
 import difflib
 
-from .schema import validate_spec, require, number, CAPABILITY_VERSION, production_limits
+from .schema import validate_spec, require, number, CAPABILITY_VERSION, production_limits, validate_layout_style
 
 RENDER_TIMEOUT_SECONDS = 43200
 from v3.partial_cache import retain_config, partial_index
@@ -555,16 +555,24 @@ def validate_action_audit(audit, spec, tokens, audio_hash, alignment_hash, *, sy
             if not lo <= action['at'] <= hi:
                 require(entry.get('reviewed_by') and entry.get('reason') and entry.get('evidence'), 'action outside token envelope needs explicit timing review evidence')
 
-def render_identity(spec, engine_identity, audio_hash, alignment_hash, audit_hash):
+def render_identity(spec, engine_identity, audio_hash, alignment_hash, audit_hash, *, selected_style="classic_black"):
+    from .styles import check_style
+    check_style(selected_style)
+    engine_identity += "" if selected_style == "classic_black" else "|style:" + selected_style
     production_limits(spec)  # reject unknown profiles, never strip the declaration
     return digest(json.dumps(spec, sort_keys=True, ensure_ascii=False, allow_nan=False)
                   + engine_identity + audio_hash + alignment_hash + audit_hash)
 
-def compile_geometry_source(spec, engine_root, *, encoder=None, ffmpeg_exe=None):
+def compile_geometry_source(spec, engine_root, *, encoder=None, ffmpeg_exe=None, selected_style="classic_black"):
+    from .styles import check_style
+    check_style(selected_style)
     spec = validate_spec(spec)
+    validate_layout_style(spec, selected_style)
     code = ('import sys\nsys.path.insert(0, ' + repr(str(engine_root))
             + ')\nfrom geometry.runtime import GeometryScene\nclass GeneratedGeometryVideo(GeometryScene):\n    spec = '
             + repr(spec) + '\n')
+    if selected_style != 'classic_black':
+        code += '    selected_style = ' + repr(selected_style) + '\n'
     if encoder and encoder.get('profile') != 'software':
         from .native_encoder import encoder_contract
         require(encoder == encoder_contract(encoder.get('profile'), ffmpeg_exe), 'encoder contract mismatch')
@@ -751,6 +759,12 @@ def run_job(runner, request_path, storyboard_path, job, config, quality, job_roo
     try:
         request, audio = runner._request(request_path)
         spec = validate_spec(read(storyboard_path))
+        from .styles import load_selection
+        selection = load_selection(request_path)
+        selected_style = selection['selected_style']
+        validate_layout_style(spec, selected_style)
+        dump(job/'style-selection.json', selection)
+        manifest['selected_style'] = selected_style
         manifest.update(production_profile=spec.get('production_profile', 'standard'),
                         production_limits=production_limits(spec), render_timeout_seconds=RENDER_TIMEOUT_SECONDS)
         dump(job/'manifest.json', manifest)
@@ -778,7 +792,7 @@ def run_job(runner, request_path, storyboard_path, job, config, quality, job_roo
         cache = root / 'cache'; cache.mkdir(exist_ok=True)
         dump(cache/f'geometry_alignment_{original_hash}_{digest(canonical(spec["narration"]))}.json', analysis)
         dump(job/'request.json', request); dump(job/'storyboard_normalized.json', spec)
-        identity = render_identity(spec, engine_hash(runner.ENGINE_ROOT), original_hash, alignment_hash, runner._sha256(audit_path))
+        identity = render_identity(spec, engine_hash(runner.ENGINE_ROOT), original_hash, alignment_hash, runner._sha256(audit_path), selected_style=selected_style)
         manifest.update(identity=identity, inputs={'audio_sha256':original_hash, 'alignment_sha256':alignment_hash}, engine_version=engine_hash(runner.ENGINE_ROOT), timing_source=analysis.get('timing_source', analysis.get('source', analysis.get('engine'))))
         preview = None
         for p in sorted((root/'runs').glob('*/manifest.json'), reverse=True):
@@ -808,7 +822,7 @@ def run_job(runner, request_path, storyboard_path, job, config, quality, job_roo
         encoding_identity = encoder_cache_identity(identity, encoder)
         manifest.update(encoder=encoder, encoding_identity=encoding_identity)
         # Spec is a validated fixed literal; -I and explicit engine import exclude user modules.
-        code = compile_geometry_source(spec, runner.ENGINE_ROOT, encoder=encoder, ffmpeg_exe=config['ffmpeg_exe'])
+        code = compile_geometry_source(spec, runner.ENGINE_ROOT, encoder=encoder, ffmpeg_exe=config['ffmpeg_exe'], selected_style=selected_style)
         code_path = job/'generated_geometry_video.py'; code_path.write_text(code, encoding='utf-8')
         output = job/f'{quality}.mp4'
         reused = False

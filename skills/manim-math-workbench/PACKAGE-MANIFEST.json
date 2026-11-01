@@ -1,11 +1,11 @@
 {
   "package": "manim-math-workbench",
-  "manifest_revision": "20261013-public-source-mit",
+  "manifest_revision": "20261101-public-source-mit",
   "schema_version": "geometry-1.0",
-  "capability_version": "geometry-1.8.1",
-  "runner_version": "0.1.2",
-  "payload_count": 108,
-  "expected_archive_member_count": 109,
+  "capability_version": "geometry-1.9.7",
+  "runner_version": "0.1.3",
+  "payload_count": 126,
+  "expected_archive_member_count": 127,
   "scope": "Public source, generic examples, maintenance tests and synthetic fixture source. Excludes private inputs, runtime configuration, binaries, media, logs, caches and backups.",
   "validation_reference": "VALIDATION.md",
   "files": [
@@ -116,8 +116,8 @@
     },
     {
       "path": "assets/engine/geometry/math2d.py",
-      "sha256": "f29adfd2356f39edaca42bde38132b508413b33b84ba8ce4ac4d9d96061c2e99",
-      "bytes": 21450
+      "sha256": "6e1c5422bf990740b2db130355b7cd794f1053f8e79d6d62c659a397688c167a",
+      "bytes": 22673
     },
     {
       "path": "assets/engine/geometry/native_encoder.py",
@@ -131,8 +131,8 @@
     },
     {
       "path": "assets/engine/geometry/pipeline.py",
-      "sha256": "54bf03cdbafaf30cb2771e6256ba72b4d5bcb06904ebf23dd859bf3a5abcf06f",
-      "bytes": 54906
+      "sha256": "e722a673dfd2867a3364adcb86e88df1cca44661dac589bad13a34e542d9f01a",
+      "bytes": 55764
     },
     {
       "path": "assets/engine/geometry/quadratic.py",
@@ -161,13 +161,18 @@
     },
     {
       "path": "assets/engine/geometry/runtime.py",
-      "sha256": "ea85be076439eb45b094cb77cd6a3e74eae04eb115224a849e618df2ca790a5c",
-      "bytes": 54603
+      "sha256": "e57546917c64ac485704d6dcd55fdf42d680f80352f628a090c74265f95c57f3",
+      "bytes": 64725
     },
     {
       "path": "assets/engine/geometry/schema.py",
-      "sha256": "2e80b90fb9b39de704f6a396887fd0dfd44092a7e0cf95e95e37533facedfb73",
-      "bytes": 46718
+      "sha256": "867c8d81567fa1c79bfb30a2ae5ca1ecee8a5c76ad67eb232977ecf4c6578588",
+      "bytes": 56122
+    },
+    {
+      "path": "assets/engine/geometry/styles.py",
+      "sha256": "92eaab35c4c8582e8b5e5bc29a8283c8b9a8f109937d66a710c25ceb7e5d3c8a",
+      "bytes": 1692
     },
     {
       "path": "assets/engine/geometry/whisper_provenance.py",
@@ -176,13 +181,13 @@
     },
     {
       "path": "assets/engine/prompts/animation_director.md",
-      "sha256": "a741bc1c6ac54b0e3031821ed63c94b06d66abfed7aceaa66238bfc821eef536",
-      "bytes": 30726
+      "sha256": "0eda7d625e77f27e5095a7a09d42291540ea40c67a899cfd816a426d09ee1719",
+      "bytes": 30946
     },
     {
       "path": "assets/engine/prompts/geometry_director.md",
-      "sha256": "06a6c4c3bfe23529ba4d2420d7eb1865739620be8e0388af381792230ecf91fb",
-      "bytes": 34184
+      "sha256": "a0a6a035ff925c3e7d1a273b05343b67168d6fca6829b9b77e479c56c3efddaa",
+      "bytes": 44927
     },
     {
       "path": "assets/engine/v3/__init__.py",
@@ -290,6 +295,11 @@
       "bytes": 4512
     },
     {
+      "path": "examples/freeform_chapter.json",
+      "sha256": "9954df3b3b38cc5a3b33c85f5edb19046b6352ca01ef6d16e08f59a9a3ea7c96",
+      "bytes": 4266
+    },
+    {
       "path": "examples/geometry_minimal.json",
       "sha256": "868afcf779e2e1403afdf1a06c4c87be1bc047ac87b5523d318d6ca6f734f92b",
       "bytes": 834
@@ -298,6 +308,16 @@
       "path": "examples/long_lesson_minimal.json",
       "sha256": "940bf5316daa3b5abfe18b4e64e1a9c72b2dea9192897a7c51f3fa799ab59337",
       "bytes": 1614
+    },
+    {
+      "path": "examples/paper_layout_4x3.json",
+      "sha256": "8d747a7c98233947380e3494ddbe72248752b358e2a910589b50e4fd8c67552e",
+      "bytes": 4131
+    },
+    {
+      "path": "examples/paper_steps.json",
+      "sha256": "249478c6d6fc43db9ac87ab440a2000b21ee66b4ee95720381db10cdb1674701",
+      "bytes": 6815
     },
     {
       "path": "examples/quadratic_derived_points.json",
@@ -320,9 +340,19 @@
       "bytes": 9118
     },
     {
+      "path": "examples/reference_paper.json",
+      "sha256": "29007f324ff64614e2e9ef5d0b3c12a8377b4eee917bc6906d305d8086a9f12e",
+      "bytes": 11097
+    },
+    {
       "path": "examples/rotation_points.json",
       "sha256": "24731562bc2dab14b05569389af01320b7c9c3336a201f69fea68a24ce8f954d",
       "bytes": 4629
+    },
+    {
+      "path": "examples/scale_points.json",
+      "sha256": "6d5c468b3b310b110cf0ec0b8e7f6e64334919cd4f812cbcc4f868acba4f9925",
+      "bytes": 4301
     },
     {
       "path": "examples/text_transform.json",
@@ -341,38 +371,43 @@
     },
     {
       "path": "README.md",
-      "sha256": "b367960bc643637c91af3892083a84e73cc33e7ca0d6abcc98e4d5806fe5b51e",
-      "bytes": 7869
+      "sha256": "782cbba2c295b5e43d082acec522c0d7689dc71e48373299278ac14bd8ad6132",
+      "bytes": 7917
+    },
+    {
+      "path": "references/account-preferences.md",
+      "sha256": "eaf879058d6ebab03a12eba06e3b96a36f4ec1b2d5a7b739eb311ed48e63c840",
+      "bytes": 2807
     },
     {
       "path": "references/director-and-editing.md",
-      "sha256": "ebd51530073a47300b15360674e998d76a8bc80d12b745303d4d7a7d6a14da89",
-      "bytes": 3623
+      "sha256": "29496f3d9fae8d5f750168c9649a5cdce99a893a1c8a7f2bb1ee45aaf113f080",
+      "bytes": 4970
     },
     {
       "path": "references/douyin-transcription.md",
-      "sha256": "6a8fec76272203e01ec0a3d410e3039c495d46ed360cc8d0c507b1555ff5b6d7",
-      "bytes": 7252
+      "sha256": "59941cc6f0238d642cbca67543dc839a6b3372036a00f3084271c3333c6fd06a",
+      "bytes": 7371
     },
     {
       "path": "references/geometry.md",
-      "sha256": "183dd93b7014caabcb47b41261d2d36b8dee3bde1f5efa50b2e1021f88c8739a",
-      "bytes": 35642
+      "sha256": "ac03c87f1cffbcd50dbc29003e59613abaff64151ecdd590a0c88a7ae493eb8c",
+      "bytes": 36841
     },
     {
       "path": "references/maintenance-and-qa.md",
-      "sha256": "8a65f3b2657e1c9ab566d8d1d4e84ad1057ab593381d1f738321116ea8d91789",
-      "bytes": 15673
+      "sha256": "cd6e538017c1230e22f76762787f69777aa2c77bf958ca273b9e1234bf88091b",
+      "bytes": 18465
     },
     {
       "path": "references/narration-preparation.md",
-      "sha256": "fd2f82f86067c9f02c9c16b3b5c452492253f7a7a8d8dc247592d41b57844c11",
-      "bytes": 15653
+      "sha256": "7f923415d61b42d5d70fe604be61b37a4d6597c56c59490b93b5cd0b8fb26d8d",
+      "bytes": 21152
     },
     {
       "path": "references/operate.md",
-      "sha256": "d5c6da0a97fc058bcd8d7e156a71536b9a7ed25f9ef7df6075095f986ce8e224",
-      "bytes": 8924
+      "sha256": "9196eb4526586434e7e151861961982238c0ae95e9f925c5becb13c4f550e489",
+      "bytes": 9295
     },
     {
       "path": "references/provenance.md",
@@ -380,9 +415,24 @@
       "bytes": 2861
     },
     {
+      "path": "references/sound-effects.md",
+      "sha256": "6ac2fcd78f5b173fb640cee2b93820f9809999cf0dfec63b3de99fc1456fb5ea",
+      "bytes": 3010
+    },
+    {
       "path": "references/video-covers.md",
-      "sha256": "2631fab3ec62cf7378bb8d15d649287c2dcc98daa532ea4f1909626c3ee880d1",
-      "bytes": 3398
+      "sha256": "df4db17219da013c0a14a424c76b0fc45709c0a2e5ea6d6a4dae3f30904f5867",
+      "bytes": 3776
+    },
+    {
+      "path": "references/visual-styles.md",
+      "sha256": "1c197c0031d3da1c1a362c0f58010fe7e8d50d6c153395dff3ef73e4402aed84",
+      "bytes": 23738
+    },
+    {
+      "path": "scripts/add_sfx.py",
+      "sha256": "f61da42db50193bcf254ff7d3c87aeb7b32412f511c0055d31ae64d200276097",
+      "bytes": 9269
     },
     {
       "path": "scripts/douyin_launch.mjs",
@@ -405,6 +455,11 @@
       "bytes": 4306
     },
     {
+      "path": "scripts/prepare_tts_readings.py",
+      "sha256": "ab4faff07cb6c56cc3699ba2db6d65fc4fa06e3aa64a5edb6b5746e704ec7517",
+      "bytes": 6078
+    },
+    {
       "path": "scripts/setup.ps1",
       "sha256": "e17eb97d7eb2d998d2d425064151a7c9243d8ef6cbb90d81e16bf3aacdc9e46b",
       "bytes": 25908
@@ -421,13 +476,13 @@
     },
     {
       "path": "scripts/video.py",
-      "sha256": "775376808cecd3e0a3537d8e7cbed3b0b202dd580f8f0e23e4ac229c1b799361",
-      "bytes": 29706
+      "sha256": "2f2ed05f6ba065823f83804488a7ca5cf1e8a9ea77a79e7ae5d5bc6a4f244771",
+      "bytes": 30117
     },
     {
       "path": "SKILL.md",
-      "sha256": "1d263fde833d99910258cf4a76b2f92f0dd9e917b79e217c91621e0aa5f8bc02",
-      "bytes": 13962
+      "sha256": "018f7b25d87ed294b5de696fc4a464574e15da58523a66a3b0a4f9258bdc4c16",
+      "bytes": 17485
     },
     {
       "path": "tests/douyin_api.test.mjs",
@@ -455,6 +510,16 @@
       "bytes": 2520
     },
     {
+      "path": "tests/render_emphasis_smoke.py",
+      "sha256": "1b845af790f3e62a8216a54857cd93f34b1eb860a59d8b60c991becda42e30a9",
+      "bytes": 5859
+    },
+    {
+      "path": "tests/render_scale_smoke.py",
+      "sha256": "4e3fac3fa6645695b0527942b05dc0542dab4f5e646f738292a56be2ec5d4ca3",
+      "bytes": 1881
+    },
+    {
       "path": "tests/test_conic.py",
       "sha256": "6a7bc2b59d74a2391c96b515b3ffdf0854cfefaa8d6ddde8d5f90f37f617abff",
       "bytes": 12500
@@ -466,8 +531,13 @@
     },
     {
       "path": "tests/test_focus_transition.py",
-      "sha256": "22dcd2422d80cee6b304435ade30a530e3e2360c0e1a080c1245e7f274014438",
-      "bytes": 7940
+      "sha256": "065225e468a05de81829567f68f6d555d4481f5f0eda11051532277c9ba5ec82",
+      "bytes": 7967
+    },
+    {
+      "path": "tests/test_freeform.py",
+      "sha256": "160af4f54a4be927e0143213a60da3c5699b859aececee696c301af4795c2f30",
+      "bytes": 7149
     },
     {
       "path": "tests/test_geometry_circle.py",
@@ -483,6 +553,11 @@
       "path": "tests/test_geometry_single_decode.py",
       "sha256": "1e51ff0e00a83195554a63a44d37cc6f9761b54bea1f9f3b298b43c1fc610655",
       "bytes": 9354
+    },
+    {
+      "path": "tests/test_highlight_emphasis.py",
+      "sha256": "b5829afc40f8cf15ae3f55043989c3c10c765ecb5280cc9b2622e616cd0a0fc3",
+      "bytes": 4908
     },
     {
       "path": "tests/test_highlight_masks.py",
@@ -505,14 +580,29 @@
       "bytes": 6112
     },
     {
+      "path": "tests/test_paper_steps.py",
+      "sha256": "f15c138a2128a4a80a06bcd680f596ec93a56ce075015a8c16f88fa933ae9319",
+      "bytes": 7024
+    },
+    {
       "path": "tests/test_provider_word_alignment.py",
       "sha256": "55b62b5e68989546abfcf5763b65dbb94fd96af3a837bf27a50d60dc3ee681f7",
       "bytes": 10296
     },
     {
+      "path": "tests/test_reference_typography.py",
+      "sha256": "125ed9c11593cb01e4f864ee252a7873731bcafb7c668863923e18d5084e1020",
+      "bytes": 9138
+    },
+    {
       "path": "tests/test_rotation.py",
       "sha256": "259c6c7715c882416ec32041cecca22c9f08bff1f9dac8edabf21d1ab474641f",
       "bytes": 6947
+    },
+    {
+      "path": "tests/test_scale.py",
+      "sha256": "7d1672b3cf14e34b8ded56ece6aadfe0ec0ed139bb825fb68c31f977ea010952",
+      "bytes": 7145
     },
     {
       "path": "tests/test_text_readability.py",
@@ -546,8 +636,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "c4e64f4a6b222ea6fcfa4b56a37e289c0650dfe517194ab5317f73db12761fbb",
-      "bytes": 2776
+      "sha256": "e027e9592a2d2bb9dcb824e66d8df6990d2a978b81c6e956dbfb157b1414883f",
+      "bytes": 4521
     }
   ]
 }

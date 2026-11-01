@@ -1,0 +1,207 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "Positive point scaling",
+  "audio_duration": 7,
+  "narration": "Synthetic silent capability fixture; no speech alignment.",
+  "canvas": {
+    "width": 1280,
+    "height": 720,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "scale",
+      "title": "Rotate then scale",
+      "start": 0,
+      "end": 7,
+      "world_bounds": [
+        -2,
+        6,
+        -3,
+        5
+      ],
+      "plot_rect": [
+        0,
+        -0.4,
+        10,
+        6
+      ],
+      "parameters": {
+        "theta": 0,
+        "s": 1
+      },
+      "problem": [],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point",
+          "xy": [
+            0,
+            0
+          ],
+          "label": "A",
+          "label_offset": [
+            -0.3,
+            -0.3
+          ]
+        },
+        {
+          "id": "C",
+          "type": "point",
+          "xy": [
+            2,
+            0
+          ]
+        },
+        {
+          "id": "P",
+          "type": "point",
+          "xy": [
+            3,
+            0
+          ]
+        },
+        {
+          "id": "RC",
+          "type": "point",
+          "derive": {
+            "type": "rotate",
+            "source": "C",
+            "center": "A",
+            "angle": {
+              "parameter": "theta",
+              "scale": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "id": "RP",
+          "type": "point",
+          "derive": {
+            "type": "rotate",
+            "source": "P",
+            "center": "A",
+            "angle": {
+              "parameter": "theta",
+              "scale": 1,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "id": "SC",
+          "type": "point",
+          "derive": {
+            "type": "scale",
+            "source": "RC",
+            "center": "A",
+            "factor": {
+              "parameter": "s",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "SC",
+          "label_offset": [
+            0.25,
+            0.25
+          ],
+          "color": "#52C7EA"
+        },
+        {
+          "id": "Q",
+          "type": "point",
+          "derive": {
+            "type": "scale",
+            "source": "RP",
+            "center": "A",
+            "factor": {
+              "parameter": "s",
+              "scale": 1,
+              "offset": 0
+            }
+          },
+          "label": "Q",
+          "label_offset": [
+            0.25,
+            0.25
+          ],
+          "color": "#52C7EA"
+        },
+        {
+          "id": "disk",
+          "type": "sector",
+          "center": "SC",
+          "radius": {
+            "parameter": "s",
+            "scale": 1,
+            "offset": 0
+          },
+          "start_angle": 0,
+          "sweep_angle": 360,
+          "color": "#52C7EA",
+          "fill_opacity": 0.1
+        },
+        {
+          "id": "edge",
+          "type": "line",
+          "a": "SC",
+          "b": "Q",
+          "color": "#FFCA55"
+        }
+      ],
+      "actions": [
+        {
+          "type": "reveal",
+          "at": 0.5,
+          "duration": 0.2,
+          "ids": [
+            "A",
+            "SC",
+            "Q",
+            "disk",
+            "edge"
+          ]
+        },
+        {
+          "type": "set_parameter",
+          "at": 1,
+          "duration": 1,
+          "parameter": "theta",
+          "value": 45
+        },
+        {
+          "type": "set_parameter",
+          "at": 2.3,
+          "duration": 1.4,
+          "parameter": "s",
+          "value": 1.5
+        },
+        {
+          "type": "move",
+          "at": 4,
+          "duration": 1,
+          "positions": {
+            "A": [
+              -0.5,
+              0
+            ],
+            "P": [
+              3.5,
+              0
+            ]
+          }
+        },
+        {
+          "type": "set_parameter",
+          "at": 5.3,
+          "duration": 1,
+          "parameter": "s",
+          "value": 0.75
+        }
+      ],
+      "checks": []
+    }
+  ]
+}

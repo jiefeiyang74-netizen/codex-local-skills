@@ -52,7 +52,7 @@ def point_depends_on(objects, point, ancestor):
         obj = definitions.get(key, {})
         derive = obj.get('derive', {})
         refs = ([derive['source']] if 'source' in derive else [])
-        refs += ([derive['center']] if derive.get('type') == 'rotate' else [])
+        refs += ([derive['center']] if derive.get('type') in ('rotate', 'scale') else [])
         refs += derive.get('axis', []) + derive.get('line', [])
         refs += [ref for pair in derive.get('lines', []) for ref in pair]
         return any(visit(ref) for ref in refs)
@@ -141,6 +141,10 @@ def resolve_points(objects, overrides=None, parameters=None, *, lazy=False):
             elif kind == 'rotate':
                 angle = rotation_angle(d, parameters or {})
                 p = rotated_position(get(d['source']), get(d['center']), angle)
+            elif kind == 'scale':
+                factor = scale_factor(d, parameters or {})
+                center = get(d['center'])
+                p = center + factor * (get(d['source']) - center)
             elif kind == 'translate':
                 p = get(d['source']) + vector(d['vector'])
             elif kind == 'intersect':
@@ -174,6 +178,7 @@ def evaluate_checks(objects, actions, checks, parameters=None):
     defs = {o['id']: o for o in objects}
     from .developable import validate_surface_parameters
     validate_surface_parameters(objects, parameters)
+    validate_scale_parameters(objects, parameters)
     validate_quadratic_parameters(objects, parameters)
     validate_reciprocal_parameters(objects, parameters)
     for action in actions:
@@ -185,6 +190,7 @@ def evaluate_checks(objects, actions, checks, parameters=None):
             validate_quadratic_transition(objects, parameters, updated)
             validate_reciprocal_transition(objects, parameters, updated)
             validate_surface_parameters(objects, updated)
+            validate_scale_parameters(objects, updated)
             parameters = updated
         if action['type'] == 'merge_intervals':
             validate_interval_merge(defs, action['sources'], action['target'], parameters)
@@ -396,3 +402,22 @@ def validate_rotation_parameters(objects, parameters):
         derive = obj.get('derive', {})
         if obj.get('type') == 'point' and derive.get('type') == 'rotate':
             rotation_angle(derive, parameters)
+
+
+def scale_factor(derive, parameters):
+    """Strict positive homothety factor; no expressions or extra fields."""
+    if not isinstance(derive, dict) or set(derive) != {'type', 'source', 'center', 'factor'} or derive['type'] != 'scale':
+        raise ValueError('scale requires only type/source/center/factor')
+    if any(not isinstance(derive[k], str) for k in ('source', 'center')):
+        raise ValueError('Scale source and center must be point IDs')
+    factor = finite_scalar(scalar_value(derive['factor'], parameters))
+    if not 0 < factor <= 10000:
+        raise ValueError('Scale factor requires 0<factor<=10000')
+    return factor
+
+
+def validate_scale_parameters(objects, parameters):
+    for obj in objects:
+        derive = obj.get('derive', {})
+        if obj.get('type') == 'point' and derive.get('type') == 'scale':
+            scale_factor(derive, parameters)

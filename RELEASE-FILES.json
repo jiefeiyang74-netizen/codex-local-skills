@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "version": "v1.0.0",
-  "release_date": "2026-10-13",
+  "version": "main-20261101",
+  "release_date": "2026-11-01",
   "skills": [
     "app-factory",
     "manim-math-workbench",
@@ -180,8 +180,8 @@
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/math2d.py",
-      "size": 21450,
-      "sha256": "f29adfd2356f39edaca42bde38132b508413b33b84ba8ce4ac4d9d96061c2e99"
+      "size": 22673,
+      "sha256": "6e1c5422bf990740b2db130355b7cd794f1053f8e79d6d62c659a397688c167a"
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/native_encoder.py",
@@ -195,8 +195,8 @@
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/pipeline.py",
-      "size": 54906,
-      "sha256": "54bf03cdbafaf30cb2771e6256ba72b4d5bcb06904ebf23dd859bf3a5abcf06f"
+      "size": 55764,
+      "sha256": "e722a673dfd2867a3364adcb86e88df1cca44661dac589bad13a34e542d9f01a"
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/quadratic.py",
@@ -225,13 +225,18 @@
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/runtime.py",
-      "size": 54603,
-      "sha256": "ea85be076439eb45b094cb77cd6a3e74eae04eb115224a849e618df2ca790a5c"
+      "size": 64725,
+      "sha256": "e57546917c64ac485704d6dcd55fdf42d680f80352f628a090c74265f95c57f3"
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/schema.py",
-      "size": 46718,
-      "sha256": "2e80b90fb9b39de704f6a396887fd0dfd44092a7e0cf95e95e37533facedfb73"
+      "size": 56122,
+      "sha256": "867c8d81567fa1c79bfb30a2ae5ca1ecee8a5c76ad67eb232977ecf4c6578588"
+    },
+    {
+      "path": "skills/manim-math-workbench/assets/engine/geometry/styles.py",
+      "size": 1692,
+      "sha256": "92eaab35c4c8582e8b5e5bc29a8283c8b9a8f109937d66a710c25ceb7e5d3c8a"
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/geometry/whisper_provenance.py",
@@ -240,13 +245,13 @@
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/prompts/animation_director.md",
-      "size": 30726,
-      "sha256": "a741bc1c6ac54b0e3031821ed63c94b06d66abfed7aceaa66238bfc821eef536"
+      "size": 30946,
+      "sha256": "0eda7d625e77f27e5095a7a09d42291540ea40c67a899cfd816a426d09ee1719"
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/prompts/geometry_director.md",
-      "size": 34184,
-      "sha256": "06a6c4c3bfe23529ba4d2420d7eb1865739620be8e0388af381792230ecf91fb"
+      "size": 44927,
+      "sha256": "a0a6a035ff925c3e7d1a273b05343b67168d6fca6829b9b77e479c56c3efddaa"
     },
     {
       "path": "skills/manim-math-workbench/assets/engine/v3/__init__.py",
@@ -354,6 +359,11 @@
       "sha256": "62daeab7e59f19eabe3cd7a664da4a8aa22eea90fac9575ad3092d81786ff84a"
     },
     {
+      "path": "skills/manim-math-workbench/examples/freeform_chapter.json",
+      "size": 4266,
+      "sha256": "9954df3b3b38cc5a3b33c85f5edb19046b6352ca01ef6d16e08f59a9a3ea7c96"
+    },
+    {
       "path": "skills/manim-math-workbench/examples/geometry_minimal.json",
       "size": 834,
       "sha256": "868afcf779e2e1403afdf1a06c4c87be1bc047ac87b5523d318d6ca6f734f92b"
@@ -362,6 +372,16 @@
       "path": "skills/manim-math-workbench/examples/long_lesson_minimal.json",
       "size": 1614,
       "sha256": "940bf5316daa3b5abfe18b4e64e1a9c72b2dea9192897a7c51f3fa799ab59337"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/paper_layout_4x3.json",
+      "size": 4131,
+      "sha256": "8d747a7c98233947380e3494ddbe72248752b358e2a910589b50e4fd8c67552e"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/paper_steps.json",
+      "size": 6815,
+      "sha256": "249478c6d6fc43db9ac87ab440a2000b21ee66b4ee95720381db10cdb1674701"
     },
     {
       "path": "skills/manim-math-workbench/examples/quadratic_derived_points.json",
@@ -384,9 +404,19 @@
       "sha256": "f32a98943604c8fdb5b21fb1b2fdb4147fd8780aa2a963c65811216054d2ed35"
     },
     {
+      "path": "skills/manim-math-workbench/examples/reference_paper.json",
+      "size": 11097,
+      "sha256": "29007f324ff64614e2e9ef5d0b3c12a8377b4eee917bc6906d305d8086a9f12e"
+    },
+    {
       "path": "skills/manim-math-workbench/examples/rotation_points.json",
       "size": 4629,
       "sha256": "24731562bc2dab14b05569389af01320b7c9c3336a201f69fea68a24ce8f954d"
+    },
+    {
+      "path": "skills/manim-math-workbench/examples/scale_points.json",
+      "size": 4301,
+      "sha256": "6d5c468b3b310b110cf0ec0b8e7f6e64334919cd4f812cbcc4f868acba4f9925"
     },
     {
       "path": "skills/manim-math-workbench/examples/text_transform.json",
@@ -405,43 +435,48 @@
     },
     {
       "path": "skills/manim-math-workbench/PACKAGE-MANIFEST.json",
-      "size": 19027,
-      "sha256": "e9f39fd395ee956d648248c3029f07fda376f8c2f6b2e3b5c04698e4aecd046d"
+      "size": 22046,
+      "sha256": "c86134ed1a52c5d5f760fc96f45739e3d47ac0ce7ebf76c6404e897e805ad943"
     },
     {
       "path": "skills/manim-math-workbench/README.md",
-      "size": 7869,
-      "sha256": "b367960bc643637c91af3892083a84e73cc33e7ca0d6abcc98e4d5806fe5b51e"
+      "size": 7917,
+      "sha256": "782cbba2c295b5e43d082acec522c0d7689dc71e48373299278ac14bd8ad6132"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/account-preferences.md",
+      "size": 2807,
+      "sha256": "eaf879058d6ebab03a12eba06e3b96a36f4ec1b2d5a7b739eb311ed48e63c840"
     },
     {
       "path": "skills/manim-math-workbench/references/director-and-editing.md",
-      "size": 3623,
-      "sha256": "ebd51530073a47300b15360674e998d76a8bc80d12b745303d4d7a7d6a14da89"
+      "size": 4970,
+      "sha256": "29496f3d9fae8d5f750168c9649a5cdce99a893a1c8a7f2bb1ee45aaf113f080"
     },
     {
       "path": "skills/manim-math-workbench/references/douyin-transcription.md",
-      "size": 7252,
-      "sha256": "6a8fec76272203e01ec0a3d410e3039c495d46ed360cc8d0c507b1555ff5b6d7"
+      "size": 7371,
+      "sha256": "59941cc6f0238d642cbca67543dc839a6b3372036a00f3084271c3333c6fd06a"
     },
     {
       "path": "skills/manim-math-workbench/references/geometry.md",
-      "size": 35642,
-      "sha256": "183dd93b7014caabcb47b41261d2d36b8dee3bde1f5efa50b2e1021f88c8739a"
+      "size": 36841,
+      "sha256": "ac03c87f1cffbcd50dbc29003e59613abaff64151ecdd590a0c88a7ae493eb8c"
     },
     {
       "path": "skills/manim-math-workbench/references/maintenance-and-qa.md",
-      "size": 15673,
-      "sha256": "8a65f3b2657e1c9ab566d8d1d4e84ad1057ab593381d1f738321116ea8d91789"
+      "size": 18465,
+      "sha256": "cd6e538017c1230e22f76762787f69777aa2c77bf958ca273b9e1234bf88091b"
     },
     {
       "path": "skills/manim-math-workbench/references/narration-preparation.md",
-      "size": 15653,
-      "sha256": "fd2f82f86067c9f02c9c16b3b5c452492253f7a7a8d8dc247592d41b57844c11"
+      "size": 21152,
+      "sha256": "7f923415d61b42d5d70fe604be61b37a4d6597c56c59490b93b5cd0b8fb26d8d"
     },
     {
       "path": "skills/manim-math-workbench/references/operate.md",
-      "size": 8924,
-      "sha256": "d5c6da0a97fc058bcd8d7e156a71536b9a7ed25f9ef7df6075095f986ce8e224"
+      "size": 9295,
+      "sha256": "9196eb4526586434e7e151861961982238c0ae95e9f925c5becb13c4f550e489"
     },
     {
       "path": "skills/manim-math-workbench/references/provenance.md",
@@ -449,9 +484,24 @@
       "sha256": "fdc2acb9cb87d5f2a4fc1fc0c095739e6959eeaf86bcf07c830217f366b39741"
     },
     {
+      "path": "skills/manim-math-workbench/references/sound-effects.md",
+      "size": 3010,
+      "sha256": "6ac2fcd78f5b173fb640cee2b93820f9809999cf0dfec63b3de99fc1456fb5ea"
+    },
+    {
       "path": "skills/manim-math-workbench/references/video-covers.md",
-      "size": 3398,
-      "sha256": "2631fab3ec62cf7378bb8d15d649287c2dcc98daa532ea4f1909626c3ee880d1"
+      "size": 3776,
+      "sha256": "df4db17219da013c0a14a424c76b0fc45709c0a2e5ea6d6a4dae3f30904f5867"
+    },
+    {
+      "path": "skills/manim-math-workbench/references/visual-styles.md",
+      "size": 23738,
+      "sha256": "1c197c0031d3da1c1a362c0f58010fe7e8d50d6c153395dff3ef73e4402aed84"
+    },
+    {
+      "path": "skills/manim-math-workbench/scripts/add_sfx.py",
+      "size": 9269,
+      "sha256": "f61da42db50193bcf254ff7d3c87aeb7b32412f511c0055d31ae64d200276097"
     },
     {
       "path": "skills/manim-math-workbench/scripts/douyin_launch.mjs",
@@ -474,6 +524,11 @@
       "sha256": "d5442b41e44c46149adba309d5d2b89ed23049b56eb66f7626096d9ee161cd04"
     },
     {
+      "path": "skills/manim-math-workbench/scripts/prepare_tts_readings.py",
+      "size": 6078,
+      "sha256": "ab4faff07cb6c56cc3699ba2db6d65fc4fa06e3aa64a5edb6b5746e704ec7517"
+    },
+    {
       "path": "skills/manim-math-workbench/scripts/setup.ps1",
       "size": 25908,
       "sha256": "e17eb97d7eb2d998d2d425064151a7c9243d8ef6cbb90d81e16bf3aacdc9e46b"
@@ -490,13 +545,13 @@
     },
     {
       "path": "skills/manim-math-workbench/scripts/video.py",
-      "size": 29706,
-      "sha256": "775376808cecd3e0a3537d8e7cbed3b0b202dd580f8f0e23e4ac229c1b799361"
+      "size": 30117,
+      "sha256": "2f2ed05f6ba065823f83804488a7ca5cf1e8a9ea77a79e7ae5d5bc6a4f244771"
     },
     {
       "path": "skills/manim-math-workbench/SKILL.md",
-      "size": 13962,
-      "sha256": "1d263fde833d99910258cf4a76b2f92f0dd9e917b79e217c91621e0aa5f8bc02"
+      "size": 17485,
+      "sha256": "018f7b25d87ed294b5de696fc4a464574e15da58523a66a3b0a4f9258bdc4c16"
     },
     {
       "path": "skills/manim-math-workbench/tests/douyin_api.test.mjs",
@@ -524,6 +579,16 @@
       "sha256": "8a6143cee183da18d32a20446789e88833e3e62bef4d1146012b997ae27360cf"
     },
     {
+      "path": "skills/manim-math-workbench/tests/render_emphasis_smoke.py",
+      "size": 5859,
+      "sha256": "1b845af790f3e62a8216a54857cd93f34b1eb860a59d8b60c991becda42e30a9"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/render_scale_smoke.py",
+      "size": 1881,
+      "sha256": "4e3fac3fa6645695b0527942b05dc0542dab4f5e646f738292a56be2ec5d4ca3"
+    },
+    {
       "path": "skills/manim-math-workbench/tests/test_conic.py",
       "size": 12500,
       "sha256": "6a7bc2b59d74a2391c96b515b3ffdf0854cfefaa8d6ddde8d5f90f37f617abff"
@@ -535,8 +600,13 @@
     },
     {
       "path": "skills/manim-math-workbench/tests/test_focus_transition.py",
-      "size": 7940,
-      "sha256": "22dcd2422d80cee6b304435ade30a530e3e2360c0e1a080c1245e7f274014438"
+      "size": 7967,
+      "sha256": "065225e468a05de81829567f68f6d555d4481f5f0eda11051532277c9ba5ec82"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_freeform.py",
+      "size": 7149,
+      "sha256": "160af4f54a4be927e0143213a60da3c5699b859aececee696c301af4795c2f30"
     },
     {
       "path": "skills/manim-math-workbench/tests/test_geometry_circle.py",
@@ -552,6 +622,11 @@
       "path": "skills/manim-math-workbench/tests/test_geometry_single_decode.py",
       "size": 9354,
       "sha256": "1e51ff0e00a83195554a63a44d37cc6f9761b54bea1f9f3b298b43c1fc610655"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_highlight_emphasis.py",
+      "size": 4908,
+      "sha256": "b5829afc40f8cf15ae3f55043989c3c10c765ecb5280cc9b2622e616cd0a0fc3"
     },
     {
       "path": "skills/manim-math-workbench/tests/test_highlight_masks.py",
@@ -574,14 +649,29 @@
       "sha256": "ab8aa3414ffd2601132f4d39c24ea5934cc95fe908e0ab3928b2968234dd5987"
     },
     {
+      "path": "skills/manim-math-workbench/tests/test_paper_steps.py",
+      "size": 7024,
+      "sha256": "f15c138a2128a4a80a06bcd680f596ec93a56ce075015a8c16f88fa933ae9319"
+    },
+    {
       "path": "skills/manim-math-workbench/tests/test_provider_word_alignment.py",
       "size": 10296,
       "sha256": "55b62b5e68989546abfcf5763b65dbb94fd96af3a837bf27a50d60dc3ee681f7"
     },
     {
+      "path": "skills/manim-math-workbench/tests/test_reference_typography.py",
+      "size": 9138,
+      "sha256": "125ed9c11593cb01e4f864ee252a7873731bcafb7c668863923e18d5084e1020"
+    },
+    {
       "path": "skills/manim-math-workbench/tests/test_rotation.py",
       "size": 6947,
       "sha256": "259c6c7715c882416ec32041cecca22c9f08bff1f9dac8edabf21d1ab474641f"
+    },
+    {
+      "path": "skills/manim-math-workbench/tests/test_scale.py",
+      "size": 7145,
+      "sha256": "7d1672b3cf14e34b8ded56ece6aadfe0ec0ed139bb825fb68c31f977ea010952"
     },
     {
       "path": "skills/manim-math-workbench/tests/test_text_readability.py",
@@ -615,8 +705,8 @@
     },
     {
       "path": "skills/manim-math-workbench/VALIDATION.md",
-      "size": 2776,
-      "sha256": "c4e64f4a6b222ea6fcfa4b56a37e289c0650dfe517194ab5317f73db12761fbb"
+      "size": 4521,
+      "sha256": "e027e9592a2d2bb9dcb824e66d8df6990d2a978b81c6e956dbfb157b1414883f"
     },
     {
       "path": "skills/replace-logo-with-cutout/agents/openai.yaml",

@@ -2,15 +2,17 @@
 import copy
 import json
 import os
+import unicodedata
 from pathlib import Path
 import numpy as np
 from manim import (Scene, config, VGroup, VMobject, ValueTracker, Dot, Line, Circle, Sector,
                    DashedLine, Polygon, Arc, Text, RoundedRectangle, DashedVMobject, BackgroundRectangle,
                    FadeIn, FadeOut, Create, Indicate, Transform, TransformFromCopy, UpdateFromAlphaFunc,
-                   linear, Animation)
+                   linear, Animation, Rectangle)
 from .math2d import (resolve_points, evaluate_checks, circular_position,
                      circle_motion_parameters, curved_region_geometry, EPS, interval_state, interval_receipt, validate_interval_merge)
-from .schema import validate_production_budget, production_limits
+from .schema import (validate_production_budget, production_limits, validate_layout_style,
+                     panel_shadow_offset, panel_stroke_padding)
 from .developable import build_surface, surface_state, validate_surface_parameters
 from .conic import conic_state, validate_conic_transition
 from .conic_runtime import build_conic, build_arrow
@@ -29,6 +31,23 @@ class MaskSafeIndicate(Indicate):
         for original, changed in zip(self.mobject.get_family(), target.get_family()):
             if isinstance(original, BackgroundRectangle):
                 changed.become(original)
+        return target
+
+
+class MaskSafeEmphasis(MaskSafeIndicate):
+    """Opt-in stroke pulse; preserve geometry, opacity, masks and layer order.
+
+    Indicate's there-and-back interpolation restores the original style rather
+    than applying a guessed default. Zero-width/invisible strokes stay absent.
+    """
+
+    def create_target(self):
+        target = super().create_target()
+        for original, changed in zip(self.mobject.get_family(), target.get_family()):
+            if isinstance(original, BackgroundRectangle):
+                continue
+            if original.has_points() and original.get_stroke_opacity() > 0:
+                changed.set_stroke(width=original.get_stroke_width() * 1.45, family=False)
         return target
 
 
@@ -71,13 +90,19 @@ class ReadableTextReplace(Animation):
 
 class GeometryScene(Scene):
     spec = None
+    selected_style = "classic_black"
 
     def __init__(self, *args, **kwargs):
         canvas = (self.spec or {}).get('canvas', {})
         width, height = canvas.get('width', 1920), canvas.get('height', 1080)
         config.frame_height = 9 if width >= height else 16
         config.frame_width = config.frame_height * width / height
-        config.background_color = '#000000'
+        from .styles import check_style
+        self.paper = check_style(self.selected_style) == 'paper_guided'
+        validate_layout_style(self.spec or {}, self.selected_style)
+        config.background_color = '#F4F1E7' if self.paper else '#000000'
+        if (self.spec or {}).get('paper_palette') == 'reference_yellow':
+            config.background_color = '#FAF4D0'
         # canvas determines camera aspect only. CLI/pipeline owns output quality.
         encoder = getattr(self, '_native_encoder', None)
         if encoder:
@@ -112,20 +137,37 @@ class GeometryScene(Scene):
         self.formulas = VGroup()
         self.board = VGroup()
         landscape = config.frame_width >= config.frame_height
-        chapter_heading = self.spec.get('heading_mode', 'standard') == 'chapter'
+        chapter_heading = self.paper or self.spec.get('heading_mode', 'standard') == 'chapter'
+        initial_freeform = self.spec['chapters'][0].get('presentation') == 'freeform'
         initial_heading = self.spec['chapters'][0]['title'] if chapter_heading else self.spec.get('title', '数学解题可视化')
-        self.title = self.text(initial_heading, 36, '#FFD166').move_to([0, 3.9 if landscape else 7.2, 0])
+        self.title = self.text(initial_heading, 36, '#263633' if self.paper else '#FFD166').move_to([0, 3.9 if landscape else 7.2, 0])
+        if initial_freeform:
+            self.title = VGroup()
         self._validate_clock()
         try:
             for index, chapter in enumerate(self.spec['chapters']):
                 self.until(chapter['start'])
-                old = VGroup(*[self.mobs[k] for k in self.live], self.board, self.formulas)
-                heading_changed = chapter_heading and index > 0 and chapter['title'] != self.spec['chapters'][index-1]['title']
+                # Collect roots first; freeform exits are ordered from the live
+                # scene below, since declaration order can differ from reveal order.
+                old_ids = [k for k in self.defs if k in self.live] if index and self.spec['chapters'][index-1].get('presentation') == 'freeform' else self.live
+                old = VGroup(*[self.mobs[k] for k in old_ids], self.board, self.formulas)
+                freeform = chapter.get('presentation') == 'freeform'
+                previous_freeform = index > 0 and self.spec['chapters'][index-1].get('presentation') == 'freeform'
+                heading_changed = index > 0 and ((chapter_heading and chapter['title'] != self.spec['chapters'][index-1]['title']) or freeform != previous_freeform)
                 if heading_changed:
                     old.add(self.title)
-                    self.title = self.text(chapter['title'], 36, '#FFD166').move_to([0, 3.9 if landscape else 7.2, 0])
+                    heading_text = chapter['title'] if chapter_heading else self.spec.get('title', '数学解题可视化')
+                    self.title = self.text(heading_text, 36, '#263633' if self.paper else '#FFD166').move_to([0, 3.9 if landscape else 7.2, 0])
+                if freeform:
+                    self.title = VGroup()
                 if self.focus_box is not None:
                     old.add(self.focus_box)
+                if index and (freeform or previous_freeform):
+                    order = {mob: n for n, mob in enumerate(dict.fromkeys(
+                        mob for root in self.mobjects for mob in root.get_family()))}
+                    old.submobjects.sort(key=lambda root: min(
+                        (order[mob] for mob in root.get_family() if mob in order),
+                        default=len(order)))
                 for mob in old.get_family():
                     mob.clear_updaters()
                 if self.long_lesson and index:
@@ -136,12 +178,20 @@ class GeometryScene(Scene):
                     self._points_cache = {}
                 self.chapter = chapter
                 self.active_objects = copy.deepcopy(chapter['objects'])
+                if self.paper:
+                    for obj in self.active_objects:
+                        if obj['type'] != 'panel' and obj.get('color', '#FFFFFF').upper() in ('#FFFFFF', 'WHITE'):
+                            obj['color'] = '#263633'
                 self.bounds = chapter['world_bounds']
                 xmin, xmax, ymin, ymax = self.bounds
                 if xmax <= xmin or ymax <= ymin:
                     raise ValueError('world_bounds must have positive area')
                 self.plot_rect = chapter.get('plot_rect', [-2.45, -.35, 9.5, 5.8] if landscape else [0, .35, 10.4, 6.9])
                 self.formula_rect = chapter.get('formula_rect', [5.05, -.45, 4.5, 4.6] if landscape else [0, -5.1, 10.5, 2.4])
+                if self.paper:
+                    w = config.frame_width
+                    self.plot_rect = chapter.get('plot_rect', [-.19*w, -.25, .57*w, 5.8] if landscape else [0, 2, .88*w, 6.5])
+                    self.formula_rect = chapter.get('formula_rect', [.31*w, -.5, .30*w, 4.6] if landscape else [0, -4.9, .86*w, 3.2])
                 self.scale = min(self.plot_rect[2] / (xmax - xmin), self.plot_rect[3] / (ymax - ymin))
                 self.center = np.array([(xmin + xmax) / 2, (ymin + ymax) / 2])
                 self.defs = {o['id']: o for o in self.active_objects}
@@ -158,19 +208,46 @@ class GeometryScene(Scene):
                     self.board = VGroup()
                 for n, phrase in enumerate(chapter.get('problem', [])[:2]):
                     self.board.add(self.text(phrase, 26, max_width=4.4 if landscape else 10.5).move_to([5.05, 2.7 - .5 * n, 0] if landscape else [0, 5.3 - .6 * n, 0]))
+                if self.paper:
+                    cx, cy, cw, ch = self.formula_rect
+                    self.board = VGroup()
+                    if chapter.get('proof_layout', 'single') == 'single':
+                        card = RoundedRectangle(width=cw + .2, height=ch + 1.5, corner_radius=.08,
+                            color='#D4D7CF', stroke_width=1, fill_color='#FFFFFF', fill_opacity=1)
+                        card.move_to([cx, cy + .5, 0]).set_z_index(-2)
+                        self.board.add(card)
+                    for n, phrase in enumerate(chapter.get('problem', [])[:2]):
+                        self.board.add(self.text(phrase, 26, max_width=cw-.2).move_to([cx, cy+ch/2+.7-.5*n, 0]))
+                if freeform:
+                    self.board = VGroup()
                 for key in self.defs:
                     mob = self.build(key)
                     mob._geometry_signature = self.geometry_signature(key)
                     mob.add_updater(lambda m, dt, key=key: self.update_geometry(m, key))
                     self.mobs[key] = mob
                 first_at = chapter['actions'][0]['at'] if chapter['actions'] else chapter['end']
-                if index:
+                if index and (freeform or previous_freeform):
+                    self.opening = [FadeOut(old), FadeIn(self.title), FadeIn(self.board)]
+                    if not chapter['actions']:
+                        # No perform() will consume opening. Finish within this
+                        # chapter, including chapters shorter than a render frame.
+                        opening, self.opening = self.opening, []
+                        end = min(chapter['start'] + .5, chapter['end'])
+                        if round(end * config.frame_rate) / config.frame_rate - self.time >= .5 / config.frame_rate:
+                            self.play_to(end, *opening)
+                        else:
+                            self.remove(*old.get_family())
+                            self.add(self.title, self.board)
+                        self.record('chapter_transition', chapter['start'], chapter['start'], [], self.time)
+                elif index:
                     self.play_to(chapter['start'] + .25, FadeOut(old))
                     for mob in old.get_family():
                         mob.clear_updaters()
                     heading_anims = [FadeIn(self.title)] if heading_changed else []
                     self.play_to(chapter['start'] + .5, FadeIn(self.board), *heading_anims)
                     self.record('chapter_transition', chapter['start'], chapter['start'], [], self.time)
+                elif freeform:
+                    self.opening = []
                 elif first_at >= .5:
                     self.play_to(chapter['start'] + .5, FadeIn(self.title), FadeIn(self.board))
                 else:
@@ -200,7 +277,8 @@ class GeometryScene(Scene):
         for index, ch in enumerate(self.spec['chapters']):
             if ch['start'] < previous or ch['end'] > self.spec['audio_duration']:
                 raise ValueError(f"Chapter clock conflict: {ch['id']}")
-            end = ch['start'] + (.5 if index else 0)
+            free_transition = ch.get('presentation') == 'freeform' or (index and self.spec['chapters'][index-1].get('presentation') == 'freeform')
+            end = ch['start'] + (.5 if index and not free_transition else 0)
             for a in ch['actions']:
                 if a['duration'] <= 0 or a['at'] < end - 1e-8 or a['at'] + a['duration'] > ch['end'] + 1e-8:
                     raise ValueError(f"Action budget conflict: {ch['id']} {a}; earliest={end}")
@@ -222,12 +300,41 @@ class GeometryScene(Scene):
         # Preserve each animation's own easing (notably Indicate's return phase).
         self.play(*animations, run_time=budget - 1e-9)
 
-    def text(self, value, size=28, color='#FFFFFF', max_width=10.5, accent=None):
-        key = (str(value), size, color, max_width, accent)
+    def text(self, value, size=28, color='#FFFFFF', max_width=10.5, accent=None, typography='body'):
+        if self.paper and color.upper() in ('#FFFFFF', 'WHITE'):
+            color = '#263633'
+        font, slant = 'Microsoft YaHei', 'NORMAL'
+        weight = 'BOLD' if self.paper and size == 36 else 'NORMAL'
+        t2f, t2s = {}, {}
+        if typography == 'heavy':
+            # geometry-1.9.7: opt-in kinetic headline type, paper_guided only.
+            if not self.paper:
+                raise ValueError('heavy typography requires paper_guided')
+            weight = 'BOLD'
+        elif typography != 'body':
+            if typography not in ('math', 'serif'):
+                raise ValueError('Unknown typography')
+            font = 'Cambria' if typography == 'math' else 'SimSun'
+            slant = 'ITALIC' if typography == 'math' else 'NORMAL'
+            weight = 'NORMAL'
+            for char in str(value):
+                if unicodedata.category(char) == 'Sm' or char in '△▲∠≅≥≤∥⊥∴∵·':
+                    t2f[char], t2s[char] = 'Cambria Math', 'NORMAL'
+                elif '\u2e80' <= char <= '\u9fff' or '\uf900' <= char <= '\ufaff' or '\uff00' <= char <= '\uffef':
+                    t2f[char], t2s[char] = 'SimSun', 'NORMAL'
+            if not hasattr(self, '_available_fonts'):
+                from manimpango import list_fonts
+                self._available_fonts = set(list_fonts())
+            missing = ({font} | set(t2f.values())) - self._available_fonts
+            if missing:
+                raise ValueError('Typography requires installed fonts: ' + ', '.join(sorted(missing)))
+        key = (str(value), size, color, max_width, accent, font, slant, weight,
+               tuple(sorted(t2f.items())), tuple(sorted(t2s.items())))
         if key in self.text_cache:
             return self.text_cache[key].copy()
-        mob = Text(str(value), font='Microsoft YaHei', font_size=size, color=color,
-                   t2c={accent: '#FF4C4C'} if accent else {})
+        mob = Text(str(value), font=font, font_size=size, color=color,
+                   slant=slant, weight=weight, t2f=t2f, t2s=t2s,
+                   t2c={accent: '#B64A35' if self.paper else '#FF4C4C'} if accent else {})
         if mob.width > max_width:
             mob.scale(max_width / mob.width)
         self.text_cache[key] = mob.copy()
@@ -329,6 +436,34 @@ class GeometryScene(Scene):
         o, p = self.defs[key], self.points()
         kind, color = o['type'], o.get('color', '#FFFFFF')
         mp = lambda k: self.mapped(p[k])
+        if kind == 'panel':
+            cx, cy, width, height = o['rect']
+            group = VGroup()
+            group.z_index = -2
+            if o.get('shadow', False):
+                dx, dy = panel_shadow_offset(o)
+                # Only the exposed shadow lies outside the panel face, even
+                # when its fill is transparent. Never tint the diagram interior.
+                if o.get('shadow_style', 'soft') == 'outline':
+                    shadow = Rectangle(width=width, height=height, stroke_width=1,
+                        color='#7C7965', fill_opacity=0).move_to([cx+dx, cy+dy, 0])
+                elif width <= dx or height <= -dy:
+                    shadow = Rectangle(width=width, height=height, stroke_width=0,
+                        fill_color='#263633', fill_opacity=.1).move_to([cx+dx, cy+dy, 0])
+                else:
+                    shadow = VGroup(
+                        Rectangle(width=dx, height=height, stroke_width=0,
+                            fill_color='#263633', fill_opacity=.1).move_to([cx+width/2+dx/2, cy+dy, 0]),
+                        Rectangle(width=width-dx, height=-dy, stroke_width=0,
+                            fill_color='#263633', fill_opacity=.1).move_to([cx+dx/2, cy-height/2+dy/2, 0]))
+                group.add(shadow.set_z_index(-3))
+            group.add(Rectangle(width=width, height=height, color=o.get('color', '#D4D7CF'),
+                stroke_width=o.get('stroke_width', 1), fill_color=o.get('fill_color', '#FFFFFF'),
+                fill_opacity=o.get('fill_opacity', 1)).move_to([cx, cy, 0]).set_z_index(-2))
+            if 'accent' in o:
+                group.add(Line([cx-width/2, cy-height/2, 0], [cx+width/2, cy-height/2, 0],
+                    color=o['accent'], stroke_width=max(3, o.get('stroke_width', 1))).set_z_index(-1))
+            return group
         if kind in ('cylinder_net','cone_net'):
             return build_surface(self, o)
         if kind == 'coordinate_axes':
@@ -349,7 +484,7 @@ class GeometryScene(Scene):
             dot = Dot(mp(key), radius=.055, color=color)
             group = VGroup(dot)
             if o.get('label'):
-                label = self.text(o['label'], o.get('font_size', 28), color)
+                label = self.text(o['label'], o.get('font_size', 28), color, typography=o.get('typography','body'))
                 default_offset = [.23, .25]
                 if 'label_offset' not in o and key not in self.label_offsets:
                     segments = [(mp(line['a']), mp(line['b'])) for line in self.defs.values() if line['type'] == 'line']
@@ -368,8 +503,9 @@ class GeometryScene(Scene):
                 # Moving labels can cross circles/segments even when labels do
                 # not overlap one another. Mask only the tight text rectangle.
                 label.set_z_index(10)
-                label.add_background_rectangle(color=config.background_color, opacity=1, buff=.04)
-                label.background_rectangle.set_z_index(9)
+                if o.get('label_mask', True):
+                    label.add_background_rectangle(color=config.background_color, opacity=1, buff=.04)
+                    label.background_rectangle.set_z_index(9)
                 group.add(label)
             return group
         if kind == 'line':
@@ -443,7 +579,7 @@ class GeometryScene(Scene):
                 group.add(self.text(o['label'], 27, color).move_to(c + direction * (radius + .3)))
             return group
         if kind == 'text':
-            return self.text(o['text'], o.get('font_size', 28), color, o.get('max_width', 9)).move_to([*o['position'], 0])
+            return self.text(o['text'], o.get('font_size', 28), color, o.get('max_width', 9), typography=o.get('typography','body')).move_to([*o['position'], 0])
         raise ValueError(f'Unsupported geometry object: {kind}')
 
     def get_moving_and_static_mobjects(self, animations):
@@ -622,7 +758,7 @@ class GeometryScene(Scene):
                         animations.append(mob.animate(rate_func=linear).move_to(position))
                     target = None
                 else:
-                    target = self.text(item['text'], obj.get('font_size', 28), obj.get('color', '#FFFFFF'), obj.get('max_width', 9)).move_to(position)
+                    target = self.text(item['text'], obj.get('font_size', 28), obj.get('color', '#FFFFFF'), obj.get('max_width', 9), typography=obj.get('typography','body')).move_to(position)
                     animations.append(ReadableTextReplace(mob, target, via=item.get('via'), rate_func=linear))
                 text_cleanup.append((key, item, target))
         elif kind == 'set_parameter':
@@ -633,9 +769,11 @@ class GeometryScene(Scene):
             validate_conic_transition(self.active_objects, before, after)
             validate_quadratic_transition(self.active_objects, before, after)
             validate_reciprocal_transition(self.active_objects, before, after)
-            from .math2d import validate_rotation_parameters
+            from .math2d import validate_rotation_parameters, validate_scale_parameters
             validate_rotation_parameters(self.active_objects, before)
             validate_rotation_parameters(self.active_objects, after)
+            validate_scale_parameters(self.active_objects, before)
+            validate_scale_parameters(self.active_objects, after)
             tracker=self.parameters[a['parameter']]
             animations.append(tracker.animate(rate_func=linear).set_value(a['value']))
         elif kind == 'merge_intervals':
@@ -713,6 +851,10 @@ class GeometryScene(Scene):
                 raise ValueError('Copy source/target count mismatch')
             ids = targets
             for src, dst in zip(sources, targets):
+                if self.defs[src]['type'] == self.defs[dst]['type'] == 'point':
+                    if (self.defs[src].get('typography','body') != self.defs[dst].get('typography','body')
+                            or self.defs[src].get('label_mask',True) != self.defs[dst].get('label_mask',True)):
+                        raise ValueError('point copy typography/mask mismatch')
                 if a.get('style') == 'continuous':
                     source_def, target_def = self.defs[src], self.defs[dst]
                     if src not in self.live or dst in self.live:
@@ -720,6 +862,7 @@ class GeometryScene(Scene):
                     if (source_def['type'] != 'text' or target_def['type'] != 'text'
                             or source_def['text'] != target_def['text']
                             or source_def.get('font_size',28) != target_def.get('font_size',28)
+                            or source_def.get('typography','body') != target_def.get('typography','body')
                             or source_def.get('color','#FFFFFF').upper() != target_def.get('color','#FFFFFF').upper()
                             or source_def.get('max_width',9) != target_def.get('max_width',9)):
                         raise ValueError('continuous copy content/appearance mismatch')
@@ -780,7 +923,9 @@ class GeometryScene(Scene):
             self.record(kind, a['at'], start, ids, self.time)
             return
         elif kind == 'highlight':
-            animations.extend(MaskSafeIndicate(self.mobs[k], color='#FFD166', scale_factor=1) for k in ids if k in self.live)
+            emphasis = a.get('style') == 'emphasis'
+            pulse = MaskSafeEmphasis if emphasis else MaskSafeIndicate
+            animations.extend(pulse(self.mobs[k], color=(('#244F46' if emphasis else {'#B64A35':'#E76D50', '#386782':'#559AC4', '#46857D':'#62B5AA'}.get(self.defs[k].get('color', '#263633').upper(), '#46857D')) if self.paper else '#FFD166'), scale_factor=1) for k in ids if k in self.live)
         elif kind == 'formula':
             cx, cy, width, height = self.formula_rect
             if len(a['lines']) > 3:
@@ -860,8 +1005,11 @@ class GeometryScene(Scene):
         objects, labels = {}, []
         for key in sorted(self.live):
             mob = self.mobs[key]; b = bounds(mob)
+            if self.defs[key]['type'] == 'panel':
+                pad = panel_stroke_padding(self.defs[key])
+                b = [b[0]-pad, b[1]+pad, b[2]-pad, b[3]+pad]
             cx, cy, w, h = self.plot_rect
-            region = [cx - w / 2, cx + w / 2, cy - h / 2, cy + h / 2] if self.defs[key]['type'] != 'text' else [-config.frame_width/2+.35, config.frame_width/2-.35, -config.frame_height/2+.3, config.frame_height/2-.3]
+            region = [cx - w / 2, cx + w / 2, cy - h / 2, cy + h / 2] if self.defs[key]['type'] not in ('text', 'panel') else [-config.frame_width/2+.35, config.frame_width/2-.35, -config.frame_height/2+.3, config.frame_height/2-.3]
             objects[key] = {'bounds': b, 'safe': b[0] >= region[0] and b[1] <= region[1] and b[2] >= region[2] and b[3] <= region[3], 'safe_region': region}
             for i, child in enumerate(mob.get_family()):
                 if isinstance(child, Text):

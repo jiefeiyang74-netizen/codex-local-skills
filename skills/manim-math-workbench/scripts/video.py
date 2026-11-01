@@ -33,7 +33,7 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="backslashreplace")
 
 
-RUNNER_VERSION = "0.1.2"
+RUNNER_VERSION = "0.1.3"
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 ENGINE_ROOT = PACKAGE_ROOT / "assets" / "engine"
 PROMPT_PATH = PACKAGE_ROOT / "assets" / "engine" / "prompts" / "animation_director.md"
@@ -458,6 +458,11 @@ def _run_job(
     try:
         _json_dump(job / "runtime_evidence.json", _runtime_evidence(config))
         request, audio = _request(request_path)
+        from geometry.styles import load_selection
+        selection = load_selection(request_path)
+        if selection["selected_style"] != "classic_black":
+            raise RunnerError("paper_guided requires geometry-1.0; generic/v3 is unsupported")
+        _json_dump(job / "style-selection.json", selection)
         raw_storyboard = _json_load(storyboard_path, "storyboard")
         if "canvas" in raw_storyboard or "canvas" in request:
             raise RunnerError("generic/v3 does not support custom canvas or 4K; final is fixed at 1080x1440@60. Use geometry only for supported content.")
@@ -578,6 +583,7 @@ def _run_job(
 
 
 def _contract() -> dict[str, Any]:
+    from geometry.styles import style_contract
     from geometry.schema import contract as geometry_contract
     prompt_hash = _sha256(PROMPT_PATH) if PROMPT_PATH.is_file() else None
     prompt_text = PROMPT_PATH.read_text(encoding="utf-8") if PROMPT_PATH.is_file() else ""
@@ -586,6 +592,7 @@ def _contract() -> dict[str, Any]:
     return {
         "runner_version": RUNNER_VERSION,
         "geometry": geometry_contract(),
+        "visual_styles": style_contract(),
         "planner": "Codex 直接产出 storyboard JSON；本 runner 不调用第三方模型/API",
         "schema_version": SCHEMA_VERSION,
         "capability_version": CAPABILITY_VERSION,

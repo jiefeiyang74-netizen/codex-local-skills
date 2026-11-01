@@ -75,9 +75,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\video.ps1 run `
 
 generic runner 顺序为：缓存/重新运行本机 Whisper 逐字对齐 → `normalize_storyboard` → `apply_audio_timing` → `compile_storyboard` → 真实低清渲染/稳定帧检查。geometry 使用 [独立管线](geometry.md) 的 analyze、动作审计与渲染门槛，不调用上述 generic 编译步骤。音频是唯一主时间轴；对齐失败、低清检查失败或缺少音轨，默认都不能成功。
 
-确认当前 attempt 的真实画面和报告后才 final：generic 查看 `preview_report.json`；geometry 查看 `report.json`，并按其规则保存匹配的 `visual_review.json`。再运行同样的命令并改为 `-Quality final`。按下文导出偏好优先级明确项目最终尺寸，黑底黄标题；高清不会引用不匹配的旧预览。
+确认当前 attempt 的真实画面和报告后才 final：generic 查看 `preview_report.json`；geometry 查看 `report.json`，并按其规则保存匹配的 `visual_review.json`。再运行同样的命令并改为 `-Quality final`。按下文导出偏好优先级明确项目最终尺寸，背景与标题遵循[已选风格](visual-styles.md)；高清不会引用不匹配的旧预览。
 
-每次 run 写入 `JOB_DIR/runs/<attempt>/`，包括 manifest、report、request、规范化分镜、音频对齐附件、视频及日志。generic 另有 `storyboard_input.json`、`generated_math_video.py`、`timeline.json`；geometry 使用 `storyboard_normalized.json`、`generated_geometry_video.py`、`keyframes.json` 与动作审计。按实际 schema 和 manifest 读取，缺少另一条管线的文件不等于任务损坏。旧 attempt 保留；输入原件不改。
+每次 run 写入 `JOB_DIR/runs/<attempt>/`，包括 manifest、report、request、`style-selection.json`、规范化分镜、音频对齐附件、视频及日志。generic 另有 `storyboard_input.json`、`generated_math_video.py`、`timeline.json`；geometry 使用 `storyboard_normalized.json`、`generated_geometry_video.py`、`keyframes.json` 与动作审计。按实际 schema 和 manifest 读取，缺少另一条管线的文件不等于任务损坏。旧 attempt 保留；输入原件不改。交付恢复包时随 request、分镜、manifest 和必要附件一起提供 `style-selection.json`，并保持侧车与 request 同目录；缺侧车但原 attempt/manifest 已记录风格时，先按[恢复流程](director-and-editing.md)核对并补齐，不把已知 paper 项目默默回退为 black。
 
 读取当前 `manifest.json`：geometry 用 `artifacts.video` 配合 quality，generic 用 `artifacts.final` 或 `artifacts.preview`。确认文件存在且可解码，再把实际绝对路径交付用户；不要凭固定文件名或旧 attempt 猜成片位置。原音频长度与语义锚点驱动动作时间，不为了凑时长裁剪、变速或补静音。查看关键帧之外，还需检查关键动作前后的视频片段，不能用一张 contact sheet 证明对象已移动。
 

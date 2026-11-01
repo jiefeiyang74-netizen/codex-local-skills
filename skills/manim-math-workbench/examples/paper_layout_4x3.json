@@ -1,0 +1,177 @@
+{
+  "paper_palette": "reference_yellow",
+  "chapters": [
+    {
+      "presentation": "freeform",
+      "proof_layout": "steps",
+      "plot_rect": [
+        -2.598,
+        -0.0495,
+        5.372,
+        5.585
+      ],
+      "formula_rect": [
+        3.006,
+        -0.0495,
+        4.884,
+        5.985
+      ],
+      "problem": [],
+      "objects": [
+        {
+          "id": "header",
+          "type": "text",
+          "text": "数学",
+          "position": [
+            -5.174,
+            3.98
+          ],
+          "font_size": 36,
+          "max_width": 0.62,
+          "typography": "body",
+          "color": "#25251F"
+        },
+        {
+          "id": "stage",
+          "type": "text",
+          "text": "观察与推导",
+          "position": [
+            -4.559,
+            3.4
+          ],
+          "font_size": 36,
+          "max_width": 1.85,
+          "typography": "body",
+          "color": "#25251F"
+        },
+        {
+          "id": "diagram_frame",
+          "type": "panel",
+          "rect": [
+            -2.598,
+            -0.0495,
+            5.772,
+            5.985
+          ],
+          "color": "#696957",
+          "fill_color": "#FFFBE4",
+          "stroke_width": 1,
+          "shadow": true,
+          "shadow_style": "outline"
+        },
+        {
+          "id": "step_one",
+          "type": "panel",
+          "rect": [
+            3.006,
+            2.268,
+            4.884,
+            1.35
+          ],
+          "color": "#696957",
+          "fill_color": "#FFFBE4",
+          "stroke_width": 1,
+          "shadow": true,
+          "shadow_style": "outline"
+        },
+        {
+          "id": "step_two",
+          "type": "panel",
+          "rect": [
+            3.006,
+            0.981,
+            4.884,
+            0.9
+          ],
+          "color": "#696957",
+          "fill_color": "#FFFBE4",
+          "stroke_width": 1,
+          "shadow": true,
+          "shadow_style": "outline"
+        },
+        {
+          "id": "footer_rule",
+          "type": "panel",
+          "rect": [
+            -0.018,
+            -3.33,
+            10.932,
+            0.012
+          ],
+          "color": "#D8D1B1",
+          "fill_color": "#D8D1B1",
+          "stroke_width": 0.1
+        },
+        {
+          "id": "step_one_label",
+          "type": "text",
+          "text": "关系示例",
+          "position": [
+            1.227789,
+            2.68
+          ],
+          "font_size": 17,
+          "max_width": 4.45,
+          "typography": "body",
+          "color": "#25251F",
+          "formula_group": "step_one"
+        },
+        {
+          "id": "step_one_formula",
+          "type": "text",
+          "text": "a = a",
+          "position": [
+            1.183063,
+            2.1
+          ],
+          "font_size": 29,
+          "max_width": 4.45,
+          "typography": "math",
+          "color": "#25251F",
+          "formula_group": "step_one"
+        },
+        {
+          "id": "step_two_label",
+          "type": "text",
+          "text": "变形示例",
+          "position": [
+            1.228277,
+            1.23
+          ],
+          "font_size": 17,
+          "max_width": 4.45,
+          "typography": "body",
+          "color": "#25251F",
+          "formula_group": "step_two"
+        },
+        {
+          "id": "step_two_formula",
+          "type": "text",
+          "text": "a + 0 = a",
+          "position": [
+            1.473883,
+            0.78
+          ],
+          "font_size": 26,
+          "max_width": 4.45,
+          "typography": "math",
+          "color": "#25251F",
+          "formula_group": "step_two"
+        },
+        {
+          "id": "series_header",
+          "type": "text",
+          "text": "几何",
+          "position": [
+            5.208156,
+            3.98
+          ],
+          "font_size": 17,
+          "max_width": 1.5,
+          "typography": "body",
+          "color": "#7C7965"
+        }
+      ]
+    }
+  ]
+}

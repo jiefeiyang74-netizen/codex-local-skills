@@ -1,0 +1,503 @@
+{
+  "schema_version": "geometry-1.0",
+  "title": "参考纸面语法",
+  "paper_palette": "reference_yellow",
+  "audio_duration": 5.2,
+  "narration": "合成能力样例：对应关系、混排文字与数学符号。",
+  "canvas": {
+    "width": 960,
+    "height": 720,
+    "fps": 60
+  },
+  "chapters": [
+    {
+      "id": "reference",
+      "title": "Reference",
+      "start": 0,
+      "end": 3,
+      "world_bounds": [
+        -3,
+        3,
+        -3,
+        4
+      ],
+      "plot_rect": [
+        -2.8,
+        -0.1,
+        4.8,
+        5.05
+      ],
+      "formula_rect": [
+        3.1,
+        0.8,
+        4.6,
+        4
+      ],
+      "presentation": "freeform",
+      "proof_layout": "steps",
+      "problem": [],
+      "objects": [
+        {
+          "id": "header",
+          "type": "text",
+          "text": "数学",
+          "position": [
+            -4.8,
+            3.8
+          ],
+          "font_size": 36,
+          "color": "#25251F",
+          "max_width": 1.4
+        },
+        {
+          "id": "stage",
+          "type": "text",
+          "text": "对应关系与全等判定",
+          "position": [
+            -3.5,
+            3.05
+          ],
+          "font_size": 24,
+          "color": "#25251F",
+          "max_width": 4
+        },
+        {
+          "id": "A",
+          "type": "point",
+          "xy": [
+            -2,
+            1
+          ],
+          "label": "A",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            -0.18,
+            -0.25
+          ],
+          "font_size": 26,
+          "color": "#25251F"
+        },
+        {
+          "id": "B",
+          "type": "point",
+          "xy": [
+            0,
+            1
+          ],
+          "label": "B",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            0.23,
+            -0.1
+          ],
+          "font_size": 26,
+          "color": "#25251F"
+        },
+        {
+          "id": "C",
+          "type": "point",
+          "xy": [
+            -2,
+            3
+          ],
+          "label": "C",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            -0.18,
+            0.25
+          ],
+          "font_size": 26,
+          "color": "#25251F"
+        },
+        {
+          "id": "D",
+          "type": "point",
+          "xy": [
+            -1,
+            -2
+          ],
+          "label": "D",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            -0.2,
+            -0.25
+          ],
+          "font_size": 26,
+          "color": "#25251F"
+        },
+        {
+          "id": "E",
+          "type": "point",
+          "xy": [
+            1,
+            -2
+          ],
+          "label": "E",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            0.25,
+            -0.1
+          ],
+          "font_size": 26,
+          "color": "#25251F"
+        },
+        {
+          "id": "F",
+          "type": "point",
+          "xy": [
+            -1,
+            0
+          ],
+          "label": "F",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            -0.18,
+            0.25
+          ],
+          "font_size": 26,
+          "color": "#25251F"
+        },
+        {
+          "id": "red",
+          "type": "polygon",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "color": "#975139",
+          "fill_opacity": 0.07
+        },
+        {
+          "id": "green",
+          "type": "polygon",
+          "points": [
+            "D",
+            "E",
+            "F"
+          ],
+          "color": "#627A68",
+          "fill_opacity": 0.07
+        },
+        {
+          "id": "diagram",
+          "type": "panel",
+          "rect": [
+            -2.8,
+            -0.1,
+            5.3,
+            5.55
+          ],
+          "shadow": true,
+          "shadow_style": "outline",
+          "fill_color": "#FFFBE4",
+          "color": "#696957",
+          "stroke_width": 1.1
+        },
+        {
+          "id": "box1",
+          "type": "panel",
+          "rect": [
+            3.1,
+            1.9,
+            4.6,
+            1.5
+          ],
+          "shadow": true,
+          "shadow_style": "outline",
+          "fill_color": "#FFFBE4",
+          "color": "#696957",
+          "stroke_width": 1.1
+        },
+        {
+          "id": "box2",
+          "type": "panel",
+          "rect": [
+            3.1,
+            0.48,
+            4.6,
+            0.94
+          ],
+          "shadow": true,
+          "shadow_style": "outline",
+          "fill_color": "#FFFBE4",
+          "color": "#696957",
+          "stroke_width": 1.1
+        },
+        {
+          "id": "box3",
+          "type": "panel",
+          "rect": [
+            3.1,
+            -0.65,
+            4.6,
+            0.94
+          ],
+          "shadow": true,
+          "shadow_style": "outline",
+          "fill_color": "#FFFBE4",
+          "color": "#696957",
+          "stroke_width": 1.1,
+          "accent": "#975139"
+        },
+        {
+          "id": "label1",
+          "type": "text",
+          "text": "全等关系 · 待证明",
+          "position": [
+            2.4,
+            2.36
+          ],
+          "typography": "body",
+          "font_size": 17,
+          "formula_group": "step1",
+          "max_width": 4.2,
+          "color": "#25251F"
+        },
+        {
+          "id": "formula",
+          "type": "text",
+          "text": "△ABC≅△DEF",
+          "position": [
+            2.85,
+            1.92
+          ],
+          "typography": "math",
+          "font_size": 29,
+          "formula_group": "step1",
+          "max_width": 4.2,
+          "color": "#25251F"
+        },
+        {
+          "id": "sas",
+          "type": "text",
+          "text": "SAS（边角边）",
+          "position": [
+            2.65,
+            1.48
+          ],
+          "typography": "math",
+          "font_size": 23,
+          "formula_group": "step1",
+          "max_width": 4.2,
+          "color": "#25251F"
+        },
+        {
+          "id": "label2",
+          "type": "text",
+          "text": "已知关系",
+          "position": [
+            1.65,
+            0.71
+          ],
+          "typography": "body",
+          "font_size": 17,
+          "formula_group": "step2",
+          "max_width": 4.2,
+          "color": "#25251F"
+        },
+        {
+          "id": "given",
+          "type": "text",
+          "text": "AB = DE,  AC = DF",
+          "position": [
+            3.0,
+            0.29
+          ],
+          "typography": "math",
+          "font_size": 26,
+          "formula_group": "step2",
+          "max_width": 4.2,
+          "color": "#25251F"
+        },
+        {
+          "id": "label3",
+          "type": "text",
+          "text": "夹角对应相等",
+          "position": [
+            2.0,
+            -0.41
+          ],
+          "typography": "serif",
+          "font_size": 18,
+          "formula_group": "step3",
+          "max_width": 4.2,
+          "color": "#25251F"
+        },
+        {
+          "id": "angle",
+          "type": "text",
+          "text": "∠BAC = ∠EDF",
+          "position": [
+            2.8,
+            -0.84
+          ],
+          "typography": "math",
+          "font_size": 26,
+          "formula_group": "step3",
+          "max_width": 4.2,
+          "color": "#25251F"
+        }
+      ],
+      "actions": [
+        {
+          "type": "reveal",
+          "at": 0.1,
+          "duration": 0.4,
+          "ids": [
+            "header",
+            "stage",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "red",
+            "green",
+            "diagram",
+            "box1",
+            "box2",
+            "box3",
+            "label1",
+            "formula",
+            "sas",
+            "label2",
+            "given",
+            "label3",
+            "angle"
+          ]
+        },
+        {
+          "type": "text_transform",
+          "at": 1.3,
+          "duration": 0.4,
+          "items": [
+            {
+              "id": "formula",
+              "text": "△ABC≅△DEF",
+              "position": [
+                2.85,
+                1.92
+              ]
+            },
+            {
+              "id": "label3",
+              "text": "对应夹角相等",
+              "position": [
+                2.0,
+                -0.41
+              ]
+            }
+          ]
+        }
+      ],
+      "checks": []
+    },
+    {
+      "id": "symbols",
+      "title": "Symbols",
+      "start": 3,
+      "end": 5.2,
+      "world_bounds": [
+        -2,
+        2,
+        -2,
+        2
+      ],
+      "plot_rect": [
+        0,
+        0,
+        4,
+        4
+      ],
+      "formula_rect": [
+        0,
+        0,
+        8,
+        4
+      ],
+      "presentation": "freeform",
+      "proof_layout": "steps",
+      "problem": [],
+      "objects": [
+        {
+          "id": "P",
+          "type": "point",
+          "xy": [
+            -1,
+            -1
+          ],
+          "label": "P",
+          "typography": "math",
+          "label_mask": false,
+          "label_offset": [
+            -0.25,
+            0.2
+          ],
+          "color": "#975139"
+        },
+        {
+          "id": "mixed",
+          "type": "text",
+          "text": "已知：△ABC≅△DEF（SAS）",
+          "position": [
+            0,
+            1.1
+          ],
+          "typography": "math",
+          "font_size": 30,
+          "max_width": 10,
+          "color": "#25251F"
+        },
+        {
+          "id": "symbols",
+          "type": "text",
+          "text": "∠ABC = ∠DEF；≥ ≤ ∥ ⊥",
+          "position": [
+            0,
+            -0.1
+          ],
+          "typography": "math",
+          "font_size": 30,
+          "max_width": 10,
+          "color": "#25251F"
+        }
+      ],
+      "actions": [
+        {
+          "type": "reveal",
+          "at": 3,
+          "duration": 0.4,
+          "ids": [
+            "P",
+            "mixed",
+            "symbols"
+          ]
+        },
+        {
+          "type": "text_transform",
+          "at": 4,
+          "duration": 0.4,
+          "items": [
+            {
+              "id": "mixed",
+              "text": "结论：△ABC≅△DEF",
+              "position": [
+                0,
+                1.1
+              ]
+            }
+          ]
+        }
+      ],
+      "checks": []
+    }
+  ]
+}
